@@ -12,7 +12,7 @@ export interface CarRentalItem {
 }
 
 export interface CarRentalResponse {
-  id: string;
+  _id: string;
   name: string;
   address: string;
   district: string;
@@ -34,7 +34,7 @@ export interface RentItem {
 }
 
 export interface RentResponse {
-  id: string;
+  _id: string;
   startDate: string;
   endDate: string;
   user: string | UserResponse;       // string if not populated, UserResponse if populated
@@ -54,7 +54,7 @@ export interface UserItem {
 }
 
 export interface UserResponse {
-  id: string;
+  _id: string;
   username: string;
   email: string;
   tel: string;
@@ -67,11 +67,17 @@ export interface UserResponse {
 
 
 export interface LoginRequest {
-  email: string;
+  identifier: string;
   password: string;
 }
 
 export interface AuthResponse {
   success: boolean;
   token: string;
+  user: {
+    _id: string;
+    name: string;
+    email: string;
+    role: string;
+  };
 }
