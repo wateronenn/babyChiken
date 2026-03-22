@@ -1,5 +1,5 @@
 import { CarRentalResponse, CarRentalItem  } from "../../../interface";
-const BACKEND_URL = process.env.BACKEND_URL + '/api/v1/carRentals';
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL + '/carRentals';
 
 export async function getCarRentals(): Promise<CarRentalResponse[]> {
     const response = await fetch(BACKEND_URL);  

@@ -51,6 +51,8 @@ export interface UserItem {
   firstname: string;
   lastname: string;
   password: string;
+  role: 'user' | 'admin';
+  picture?: string;
 }
 
 export interface UserResponse {
