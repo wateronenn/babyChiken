@@ -7,6 +7,7 @@ declare module 'next-auth' {
       _id: string;
       username: string;
       email: string;
+      password: string;
       firstname: string;
       lastname: string;
       tel: string;
@@ -19,6 +20,7 @@ declare module 'next-auth' {
     _id: string;
     username: string;
     email: string;
+    password: string;
     firstname: string;
     lastname: string;
     tel: string;
