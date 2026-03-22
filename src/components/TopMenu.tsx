@@ -20,7 +20,7 @@ export default function TopMenu() {
 
         {status !== "loading" && session && (
           role === "admin" ? (
-            <TopMenuItem title="Dashboard" pageRef="/admin/car-rentals" />
+            <TopMenuItem title="Dashboard" pageRef="/admin" />
           ) : (
             <TopMenuItem title="Bookings" pageRef="/bookings" />
           )
