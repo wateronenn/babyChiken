@@ -5,17 +5,19 @@ import { useRouter } from 'next/navigation';
 export default function RegisterPage() {
   const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => { 
     e.preventDefault();
-    const form = e.currentTarget;
+    const formData = new FormData(e.currentTarget);
     await createUser({
-      username: form.username.value,
-      email: form.email.value,
-      password: form.password.value,
-      firstname: form.firstname.value,
-      lastname: form.lastname.value,
-      tel: form.tel.value,
+      username: formData.get('username') as string,
+      email: formData.get('email') as string,
+      password: formData.get('password') as string,
+      firstname: formData.get('firstname') as string,
+      lastname: formData.get('lastname') as string,
+      tel: formData.get('tel') as string,
+      role: 'user',
     });
+    alert('Registration successful, Please login now');
     router.push('/login');
   };
 

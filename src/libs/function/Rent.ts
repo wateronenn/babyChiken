@@ -1,5 +1,5 @@
 import { RentResponse, RentItem } from "../../../interface";
-const BACKEND_URL = process.env.BACKEND_URL + '/api/v1/rents';
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL + '/rents';
 
 export async function getOneRent(id: string, token: string): Promise<RentResponse> {
   const res = await fetch(`${BACKEND_URL}/${id}`, {

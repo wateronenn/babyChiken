@@ -1,22 +1,27 @@
-const BACKEND_URL = process.env.BACKEND_URL + '/api/v1/auth';
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL + '/auth';
+///console.log("Backend URL:", BACKEND_URL);
 import {User} from 'next-auth'
 import { AuthResponse } from "../../../interface";
+import { UserItem } from "../../../interface";
 
-export async function getMe(id: string, token: string) {
-  const res = await fetch(`${BACKEND_URL}/me/${id}`, {
+export async function getMe(token: string) {
+  const res = await fetch(`${BACKEND_URL}/me`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   if (!res.ok) throw new Error('Failed to fetch user');
   return res.json();
 }
-export async function createUser(data: User) {
-  const res = await fetch(`${BACKEND_URL}/auth/register`, {
+export async function createUser(data: UserItem) {
+  const res = await fetch(`${BACKEND_URL}/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   });
 
-  if (!res.ok) throw new Error('Failed to register user');
+  if (!res.ok) {
+      console.error("Logout failed:", res.status, await res.text());
+      throw new Error('Failed to logout');
+    }
   return res.json();
 }
 
@@ -25,7 +30,7 @@ export async function updateUser(
   data: Partial<User>,
   token: string
 ){
-  const res = await fetch(`${BACKEND_URL}/users/${id}`, {
+  const res = await fetch(`${BACKEND_URL}/updateUser`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -33,16 +38,12 @@ export async function updateUser(
     },
     body: JSON.stringify(data),
   });
-  if (!res.ok) throw new Error('Failed to update user');
+  if (!res.ok) {
+      console.error("Update user failed:", res.status, await res.text());
+      throw new Error('Failed to update user');
+    }
+    
   return res.json();
-}
-
-export async function deleteUser(id: string, token: string){
-  const res = await fetch(`${BACKEND_URL}/users/${id}`, {
-    method: 'DELETE',
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  if (!res.ok) throw new Error('Failed to delete user');
 }
 
 export async function login(userIdentifier:string,userPassword:string) {
@@ -64,22 +65,36 @@ export async function logout(token: string): Promise<void> {
     method: 'GET',
     headers: { Authorization: `Bearer ${token}` },
   });
-  if (!res.ok) throw new Error('Failed to logout');
+  if (!res.ok) 
+    {
+      console.error("Logout failed:", res.status, await res.text());
+      throw new Error('Failed to logout');
+    }
 }
 
 export async function resetPassword(
   token: string,
+  currentPassword: string,
   newPassword: string,
-  resetToken: string
+  confirmPassword: string
 ): Promise<AuthResponse> {
-  const res = await fetch(`${BACKEND_URL}/auth/resetpassword/${resetToken}`, {
-    method: 'PUT',
+  const res = await fetch(`${BACKEND_URL}/resetPassword`, {
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ password: newPassword }),
+    body: JSON.stringify({ 
+      currentPassword: currentPassword, 
+      newPassword : newPassword,
+      rePassword: confirmPassword
+    }),
   });
-  if (!res.ok) throw new Error('Failed to reset password');
+  if (!res.ok) {
+    {
+      console.error("Reset password failed:", res.status, await res.text());
+      throw new Error('Failed to reset password');
+    }
+  }
   return res.json();
 }
