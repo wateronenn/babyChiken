@@ -1,37 +1,30 @@
-import { UserItem, UserResponse, LoginRequest, AuthResponse } from "../../../interface";
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL + '/api/v1/rents';
+const BACKEND_URL = process.env.BACKEND_URL + '/api/v1/auth';
+import {User} from 'next-auth'
+import { AuthResponse } from "../../../interface";
 
-export async function getOneUser(id: string, token: string): Promise<UserResponse> {
-  const res = await fetch(`${BACKEND_URL}/users/${id}`, {
+export async function getMe(id: string, token: string) {
+  const res = await fetch(`${BACKEND_URL}/me/${id}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   if (!res.ok) throw new Error('Failed to fetch user');
   return res.json();
 }
-
-export async function getManyUsers(token: string): Promise<UserResponse[]> {
-  const res = await fetch(`${BACKEND_URL}/users`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  if (!res.ok) throw new Error('Failed to fetch users');
-  return res.json();
-}
-
-export async function createUser(data: UserItem): Promise<AuthResponse> {
+export async function createUser(data: User) {
   const res = await fetch(`${BACKEND_URL}/auth/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   });
+
   if (!res.ok) throw new Error('Failed to register user');
   return res.json();
 }
 
 export async function updateUser(
   id: string,
-  data: Partial<UserItem>,
+  data: Partial<User>,
   token: string
-): Promise<UserResponse> {
+){
   const res = await fetch(`${BACKEND_URL}/users/${id}`, {
     method: 'PUT',
     headers: {
@@ -44,7 +37,7 @@ export async function updateUser(
   return res.json();
 }
 
-export async function deleteUser(id: string, token: string): Promise<void> {
+export async function deleteUser(id: string, token: string){
   const res = await fetch(`${BACKEND_URL}/users/${id}`, {
     method: 'DELETE',
     headers: { Authorization: `Bearer ${token}` },
@@ -52,18 +45,22 @@ export async function deleteUser(id: string, token: string): Promise<void> {
   if (!res.ok) throw new Error('Failed to delete user');
 }
 
-export async function login(data: LoginRequest): Promise<AuthResponse> {
-  const res = await fetch(`${BACKEND_URL}/auth/login`, {
+export async function login(userIdentifier:string,userPassword:string) {
+  const response = await fetch(`${BACKEND_URL}/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
+    body: JSON.stringify({ identifier: userIdentifier, password: userPassword } ),
   });
-  if (!res.ok) throw new Error('Failed to login');
-  return res.json();
+  if (!response.ok) {
+        const errorBody = await response.json().catch(() => response.text());
+        console.error("Login failed:", response.status, errorBody); 
+        throw new Error(`Failed to login: ${response.status} - ${JSON.stringify(errorBody)}`);
+    }
+    return await response.json()
 }
 
 export async function logout(token: string): Promise<void> {
-  const res = await fetch(`${BACKEND_URL}/auth/logout`, {
+  const res = await fetch(`${BACKEND_URL}/logout`, {
     method: 'GET',
     headers: { Authorization: `Bearer ${token}` },
   });
