@@ -1,4 +1,4 @@
-import { RentResponse, RentItem } from "../../../interface";
+import { RentResponse, RentItem, RentJson } from "../../../interface";
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL + '/rents';
 
 export async function getOneRent(id: string, token: string): Promise<RentResponse> {
@@ -9,7 +9,7 @@ export async function getOneRent(id: string, token: string): Promise<RentRespons
   return res.json();
 }
 
-export async function getManyRents(token: string): Promise<RentResponse[]> {
+export async function getManyRents(token: string): Promise<RentJson> {
   const res = await fetch(BACKEND_URL, {
     headers: { Authorization: `Bearer ${token}` },
   });

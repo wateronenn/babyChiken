@@ -26,6 +26,13 @@ export interface CarRentalResponse {
 }
 
 // ==================== Rent ====================
+export interface RentJson {
+  success: boolean,
+  count: number,
+  pagination: Object,
+  data: RentResponse[]
+}
+
 export interface RentItem {
   startDate: Date | string;
   endDate: Date | string;
@@ -38,7 +45,7 @@ export interface RentResponse {
   startDate: string;
   endDate: string;
   user: string | UserResponse;       // string if not populated, UserResponse if populated
-  carRental: string | CarRentalResponse; // string if not populated, CarRentalResponse if populated
+  carRental?: string | CarRentalResponse; // string if not populated, CarRentalResponse if populated
   car: string;
   createAt: string;
 }
