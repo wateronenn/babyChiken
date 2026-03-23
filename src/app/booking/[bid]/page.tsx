@@ -8,7 +8,7 @@ import CancelButton from "@/components/booking/CancelButton";
 import Link from "next/link";
 
 export default async function BookingDetailPage({params} : {params:Promise<{bid:string}>}) {
-    // connect backend
+
     const session = await getServerSession(authOptions)
         if (!session || !session.user.token) return null
     

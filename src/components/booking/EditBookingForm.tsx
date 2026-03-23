@@ -5,16 +5,18 @@ import { DatePicker } from "@mui/x-date-pickers"
 import { LocalizationProvider } from "@mui/x-date-pickers"
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
 import { useState } from "react"
-import { Dayjs } from "dayjs"
+import dayjs, { Dayjs } from "dayjs"
 import { updateRent } from "@/libs/function/Rent"
 import { useRouter } from "next/navigation"
 import { MenuItem, Select } from "@mui/material"
+import { RentResponse } from "../../../interface"
+import { getCarRentalById } from "@/libs/function/carRental"
 
-export default function EditBookingForm({bid, token, cars = []}: {bid: string, token: string, cars?: string[]}) {
+export default function EditBookingForm({bid, token, rentItem, cars=[]}: {bid: string, token: string, rentItem:RentResponse, cars?: string[]}) {
 
-    const [startDate, setStartDate] = useState<Dayjs | null>(null)
-    const [endDate, setEndDate] = useState<Dayjs | null>(null)
-    const [car, setCar] = useState<string>('')
+    const [startDate, setStartDate] = useState<Dayjs | null>(dayjs(rentItem.startDate))
+    const [endDate, setEndDate] = useState<Dayjs | null>(dayjs(rentItem.endDate))
+    const [car, setCar] = useState<string>(rentItem.car)
     const router = useRouter()
 
     const handleSubmit = async () => {
@@ -58,11 +60,15 @@ export default function EditBookingForm({bid, token, cars = []}: {bid: string, t
                             </MenuItem>
                         ))}
                     </Select>
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white p-2 rounded"
-                    onClick={handleSubmit}>
-                        Edit
-                    </button>
                 </form>
+                <button className="bg-blue-500 hover:bg-blue-700 text-white p-2 rounded"
+                onClick={handleSubmit}>
+                    Confirm
+                </button>
+                <button className="bg-blue-500 hover:bg-blue-700 text-white p-2 rounded"
+                onClick={() => router.push(`/booking/${bid}`)}>
+                    Cancel
+                </button>
             </div>
         </main>
     )

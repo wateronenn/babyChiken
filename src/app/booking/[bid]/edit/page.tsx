@@ -9,10 +9,10 @@ export default async function EditPage({params}: {params: Promise<{bid: string}>
     if (!session || !session.user.token) return null
     
     const {bid} = await params
-    const rent = await getOneRent(bid, session.user.token)
+    const rentItem = await getOneRent(bid, session.user.token)
 
-    const carRentalId = typeof rent.carRental === 'string' ? rent.carRental : rent.carRental._id
+    const carRentalId = typeof rentItem.carRental === 'string' ? rentItem.carRental : rentItem.carRental._id
     const carRental = await getCarRentalById(carRentalId)
 
-    return <EditBookingForm bid={bid} token={session.user.token} cars={carRental.car ?? []}/>
+    return <EditBookingForm bid={bid} token={session.user.token} rentItem={rentItem} cars={carRental.car ?? []}/>
 }
