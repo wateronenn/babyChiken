@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { getCarRentalById } from "@/libs/function/carRental"
 import { convertGoogleDriveUrl } from "@/libs/function/convertGoogleDriveUrl"
+import DeleteCarRentalButton from "@/components/DeleteCarRentalButton"
 
 export default async function Page({
   params,
@@ -117,9 +118,7 @@ export default async function Page({
                     Edit
                   </Link>
 
-                  <button className="rounded-full bg-[#f4b8b8] px-7 py-3 font-medium text-white shadow-sm transition hover:scale-[1.02]">
-                    Delete
-                  </button>
+                  <DeleteCarRentalButton id={item._id} name={item.name} />
                 </div>
               </div>
             </div>

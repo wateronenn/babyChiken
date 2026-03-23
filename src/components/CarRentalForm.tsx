@@ -286,7 +286,7 @@ export default function CarRentalForm({
         <button
           type="button"
           onClick={onCancel}
-          className="min-w-[140px] rounded-full bg-pink-300 px-6 py-2.5 text-white"
+          className="min-w-[140px] rounded-full bg-[#f4b8b8] px-6 py-2.5 text-white"
         >
           Cancel
         </button>
