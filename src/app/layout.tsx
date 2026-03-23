@@ -19,8 +19,8 @@ export default async function RootLayout({
     <html lang="en">
       <body>
          <NextAuthProvider session={session}>
-         <TopMenu/>
-          <div className="pt-[50px]">
+          <TopMenu/>
+          <div className="pt-[50px] min-h-screen">
             {children}
           </div>
          </NextAuthProvider>

@@ -1,21 +1,23 @@
 // app/page.tsx
 'use client'
+import Link from "next/link";
 export default function HomePage() {
   return (
-    <div>
-      <h2>Welcome to My Next.js App 🚀</h2>
-      <p>This is the homepage.</p>
+    <main>
+      <div  className="flex flex-col bg-[var(--color-pastel-yellow)] items-center justify-between min-h-screen">
+        <h1> For bg Image with cool text above</h1>
+        <div className="flex flex-col items-center gap-4 mb-20">
+          <Link href="/login">
+          <button className="w-full px-8 cursor-pointer mt-2 bg-[var(--color-primary-purple)] text-white py-2 rounded-2xl shadow-xl shadow-[var(--color-second-purple)] hover:bg-[var(--color-second-purple)]  hover:opacity-90 transition" >Login</button>
+        </Link>
 
-      <button
-        onClick={() => alert("Hello from Next.js!")}
-        style={{
-          padding: "0.5rem 1rem",
-          marginTop: "1rem",
-          cursor: "pointer",
-        }}
-      >
-        Click Me
-      </button>
-    </div>
+        <Link href="/register">
+          <button className ="cursor-pointer text-[var(--color-second-purple)]" >Register</button>
+        </Link>
+        </div>
+        
+      </div>
+      
+    </main>
   );
 }
