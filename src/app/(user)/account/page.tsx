@@ -7,7 +7,6 @@ export default async function AccountPage() {
   const userProfile = await UserProfile();
   return (
     <main>
-        <h1 className="text-3xl font-bold mb-4">Account Page</h1>
         {userProfile}
         
     </main>

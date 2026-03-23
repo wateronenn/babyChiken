@@ -19,13 +19,13 @@ export default function TopMenu() {
             <div className="px-3 py-1">...</div>
           ) : session ? (
             <Link href="/account">
-              <div className="px-3 py-1 text-gray-600 font-bold">
+              <div className="px-3 py-1 text-white font-bold">
                 Account ({session.user?.username})
               </div>
             </Link>
           ) : (
             <Link href="/login">
-              <div className="px-3 py-1 text-gray-600 font-bold">
+              <div className="px-3 py-1 text-white font-bold">
                 Sign In
               </div>
             </Link>
