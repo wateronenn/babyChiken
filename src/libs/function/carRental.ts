@@ -1,17 +1,24 @@
 import { CarRentalResponse, CarRentalItem  } from "../../../interface";
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL + '/carRentals';
 
-export async function getCarRentals(): Promise<CarRentalResponse[]> {
-    const response = await fetch(BACKEND_URL);  
-    
-    if(!response.ok) {
-        throw new Error('Failed to fetch car rentals');
-    }
-    return response.json();
+export async function getCarRentals(search?: string) {
+  let url = BACKEND_URL
+
+  if (search) {
+    url += `?search=${encodeURIComponent(search)}`
+  }
+
+  const res = await fetch(url, {
+    cache: "no-store",
+  })
+  if (!res.ok) {
+    throw new Error('Failed to fetch car rentals');
+  }
+  return res.json()
 }
 
 export async function getCarRentalById(id: string): Promise<CarRentalResponse> {
-    const response = await fetch(`${BACKEND_URL}/${id}`);
+    const response = await fetch(`${BACKEND_URL}/${id}`, { cache: 'no-store' });
        if(!response.ok) {
         throw new Error('Failed to fetch car rental');
     }
@@ -24,6 +31,7 @@ export async function createCarRental(
   token: string
 ): Promise<CarRentalResponse> {
   const res = await fetch(BACKEND_URL, {
+    cache: 'no-store',
     method: "POST",
     headers: {
       "Content-Type": "application/json",

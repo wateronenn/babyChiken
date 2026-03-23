@@ -1,7 +1,7 @@
 import Link from "next/link"
 import CarRentalCard from "@/components/CarRentalCard"
 import { getCarRentals } from "@/libs/function/carRental"
-
+export const dynamic = "force-dynamic"
 type PageProps = {
   searchParams?: Promise<{
     search?: string
@@ -12,20 +12,10 @@ export default async function Page({ searchParams }: PageProps) {
   const resolvedSearchParams = await searchParams
   const search = resolvedSearchParams?.search?.trim() || ""
 
-  const res: any = await getCarRentals()
+  const res: any = await getCarRentals(search)
   const carRentals = res?.data || []
 
-  const filteredCarRentals = carRentals.filter((item: any) => {
-    const keyword = search.toLowerCase()
-
-    return (
-      (item.name || "").toLowerCase().includes(keyword) ||
-      (item.address || "").toLowerCase().includes(keyword) ||
-      (item.district || "").toLowerCase().includes(keyword) ||
-      (item.province || "").toLowerCase().includes(keyword) ||
-      (item.region || "").toLowerCase().includes(keyword)
-    )
-  })
+  const filteredCarRentals = carRentals
 
   return (
     <main className="min-h-screen bg-[#f4f4f4] pt-16">
