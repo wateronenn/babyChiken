@@ -57,8 +57,8 @@ export default async function SuccessBookingPage({params}: {params: Promise<{id:
                     </h3>
                 </div>
             </div>
-            <StyledButton type="purple" title="Back To Menu" pageRef="/car-rentals"/>
-            <StyledButton type="purple" title="View Bookings" pageRef="/bookings"/>
+            <StyledButton color="purple" title="Back To Menu" pageRef="/car-rentals"/>
+            <StyledButton color="purple" title="View Bookings" pageRef="/bookings"/>
         </main>
     )
 }

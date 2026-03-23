@@ -16,7 +16,7 @@ export default async function BookingCardCatalog({rentJson}:{rentJson:Promise<Re
     }
 
     return (
-        <div className="px-14 py-8 flex flex-col gap-5">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 py-8 flex flex-col gap-5 w-full">
             {
                 rentJsonReady.data.map((rentItem:RentResponse)=>(
                     <Link href={`/bookings/${rentItem._id}`} key={rentItem._id}>

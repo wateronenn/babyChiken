@@ -4,7 +4,7 @@ import React from 'react'
 export default function InteractiveBookingCard({children} : {children:React.ReactNode}) {
 
     function onCardMouseAction(event:React.SyntheticEvent) {
-        if(event.type == 'mouseover') {
+        if(event.type == 'mouseenter') {
             event.currentTarget.classList.remove('shadow-lg')
             event.currentTarget.classList.add('shadow-2xl')
 
@@ -26,10 +26,9 @@ export default function InteractiveBookingCard({children} : {children:React.Reac
     }
     
     return (
-        <div className='w-[1000] h-fit p-5 shadow-lg rounded-lg bg-[var(--color-primary-blue)]
-        text-black flex flex-row gap-10'
-        onMouseOver={(e)=>onCardMouseAction(e)}
-        onMouseOut={(e)=>onCardMouseAction(e)}
+        <div className="w-full flex items-center gap-5 rounded-[28px] bg-[var(--color-primary-blue)] px-6 py-4 shadow-md transition hover:scale-[1.01]"
+        onMouseEnter={(e)=>onCardMouseAction(e)}
+        onMouseLeave={(e)=>onCardMouseAction(e)}
         >
             {children}
         </div>

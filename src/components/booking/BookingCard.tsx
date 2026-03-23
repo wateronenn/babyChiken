@@ -11,24 +11,22 @@ export default function BookingCard({rentItem}:{rentItem:RentResponse}) {
 
     return (
         <InteractiveBookingCard>
-            <div className='flex h-[120px] w-[120px] shrink-0 items-center justify-center overflow-hidden rounded-lg bg-[var(--color-pastel-yellow)]'>
+            <div className="flex h-[120px] w-[120px] shrink-0 items-center justify-center overflow-hidden rounded-[24px] bg-[var(--color-pastel-yellow)]">
                 {
                     carRental?.picture ?
-                    <div>
-                        <Image
-                        src={carRental.picture}
-                        alt='place picture'
-                        width={0}
-                        height={0}
-                        sizes="30"
-                        className='object-cover w-full h-auto'
-                        />
-                    </div>
+                    <Image
+                    src={carRental.picture}
+                    alt='place picture'
+                    width={0}
+                    height={0}
+                    sizes="30"
+                    className='object-cover w-full h-auto'
+                    />
                     : null
                 }
             </div>
             <div>
-                <h2 className='text-[1.5em]'>
+                <h2 className="text-[22px] font-medium">
                     {rentItem._id}
                 </h2>
                 <h3 className='text-[1.25em]'>
@@ -41,7 +39,7 @@ export default function BookingCard({rentItem}:{rentItem:RentResponse}) {
                     {formatDate(rentItem.startDate)} - {formatDate(rentItem.endDate)}
                 </h3>
             </div>
-            <div className="flex items-center ml-auto text-[52px] font-light text-black">
+            <div className="ml-auto pr-2 text-[52px] font-light">
                 ›
             </div>
         </InteractiveBookingCard>
