@@ -15,7 +15,8 @@ export async function getCarRentalById(id: string): Promise<CarRentalResponse> {
        if(!response.ok) {
         throw new Error('Failed to fetch car rental');
     }
-    return response.json();
+    const json = await response.json();
+    return json.data;
 }
 
 export async function createCarRental(
