@@ -14,10 +14,7 @@ export default function CreateCarRentalPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleSubmit = async (data: CarRentalItem) => {
-    console.log("FORM DATA:", data) 
     const token = (session?.user as any)?.token
-    console.log("SESSION:", session)
-    console.log("TOKEN:", token)
 
     if (!token) {
       alert("Please login first")
@@ -34,17 +31,12 @@ export default function CreateCarRentalPage() {
           : "/img/logo.png",
       }
 
-      console.log("create payload:", payload)
-
-      const result: any = await createCarRental(payload, token)
+      const result = await createCarRental(payload, token)
       console.log("create result:", result)
-
-      if (result?.success === false) {
-        throw new Error(result?.message || "Create car rental failed")
-      }
 
       alert("Create car rental successfully")
       router.push("/admin/car-rentals")
+      router.refresh()
     } catch (error) {
       console.error("create error:", error)
       alert("Failed to create car rental")
