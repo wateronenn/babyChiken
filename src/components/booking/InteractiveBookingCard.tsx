@@ -27,7 +27,7 @@ export default function InteractiveBookingCard({children} : {children:React.Reac
     
     return (
         <div className='w-[1000] h-fit p-5 shadow-lg rounded-lg bg-[var(--color-primary-blue)]
-        text-black flex flex-row space-x-10'
+        text-black flex flex-row gap-10'
         onMouseOver={(e)=>onCardMouseAction(e)}
         onMouseOut={(e)=>onCardMouseAction(e)}
         >

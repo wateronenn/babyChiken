@@ -6,7 +6,8 @@ export async function getOneRent(id: string, token: string): Promise<RentRespons
     headers: { Authorization: `Bearer ${token}` },
   });
   if (!res.ok) throw new Error('Failed to fetch rent');
-  return res.json();
+  const json = await res.json();
+  return json.data;
 }
 
 export async function getManyRents(token: string): Promise<RentJson> {

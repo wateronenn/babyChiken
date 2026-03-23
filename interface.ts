@@ -45,7 +45,7 @@ export interface RentResponse {
   startDate: string;
   endDate: string;
   user: string | UserResponse;       // string if not populated, UserResponse if populated
-  carRental?: string | CarRentalResponse; // string if not populated, CarRentalResponse if populated
+  carRental: string | CarRentalResponse; // string if not populated, CarRentalResponse if populated
   car: string;
   createAt: string;
 }
