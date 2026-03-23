@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react"
 import CarRentalForm from "@/components/CarRentalForm"
 import { CarRentalItem } from "../../../../../../interface"
 import { createCarRental } from "@/libs/function/carRental"
+import { convertGoogleDriveUrl } from "@/libs/function/convertGoogleDriveUrl"
 
 export default function CreateCarRentalPage() {
   const router = useRouter()
@@ -13,7 +14,10 @@ export default function CreateCarRentalPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleSubmit = async (data: CarRentalItem) => {
+    console.log("FORM DATA:", data) 
     const token = (session?.user as any)?.token
+    console.log("SESSION:", session)
+    console.log("TOKEN:", token)
 
     if (!token) {
       alert("Please login first")
@@ -22,11 +26,27 @@ export default function CreateCarRentalPage() {
 
     try {
       setIsSubmitting(true)
-      await createCarRental(data, token)
+
+      const payload: CarRentalItem = {
+        ...data,
+        picture: data.picture?.trim()
+          ? convertGoogleDriveUrl(data.picture)
+          : "/img/logo.png",
+      }
+
+      console.log("create payload:", payload)
+
+      const result: any = await createCarRental(payload, token)
+      console.log("create result:", result)
+
+      if (result?.success === false) {
+        throw new Error(result?.message || "Create car rental failed")
+      }
+
       alert("Create car rental successfully")
       router.push("/admin/car-rentals")
     } catch (error) {
-      console.error(error)
+      console.error("create error:", error)
       alert("Failed to create car rental")
     } finally {
       setIsSubmitting(false)
@@ -34,7 +54,7 @@ export default function CreateCarRentalPage() {
   }
 
   return (
-    <main className="min-h-screen bg-white pt-24 px-6">
+    <main className="min-h-screen bg-white px-6 pt-24">
       <CarRentalForm
         mode="create"
         onSubmit={handleSubmit}

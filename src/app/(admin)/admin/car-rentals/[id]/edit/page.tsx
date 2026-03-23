@@ -23,18 +23,25 @@ export default function EditCarRentalPage() {
       try {
         setIsLoading(true)
 
-        const item: CarRentalResponse = await getCarRentalById(id)
+        const res: any = await getCarRentalById(id)
+        const item: CarRentalResponse = res?.data
+
+        if (!item) {
+          alert("Car rental not found")
+          router.push("/admin/car-rentals")
+          return
+        }
 
         setDefaultData({
-          name: item.name,
-          address: item.address,
-          district: item.district,
-          province: item.province,
-          postalcode: item.postalcode,
-          tel: item.tel ?? "",
-          region: item.region,
-          car: item.car ?? [""],
-          picture: item.picture ?? "",
+          name: item.name || "",
+          address: item.address || "",
+          district: item.district || "",
+          province: item.province || "",
+          postalcode: item.postalcode || "",
+          tel: item.tel || "",
+          region: item.region || "",
+          car: item.car && item.car.length > 0 ? item.car : [""],
+          picture: item.picture || "",
         })
       } catch (error) {
         console.error(error)
@@ -47,7 +54,7 @@ export default function EditCarRentalPage() {
     if (id) {
       fetchCarRental()
     }
-  }, [id])
+  }, [id, router])
 
   const handleSubmit = async (data: CarRentalItem) => {
     const token = (session?.user as any)?.token
@@ -72,19 +79,19 @@ export default function EditCarRentalPage() {
 
   if (isLoading) {
     return (
-      <main className="min-h-screen bg-white pt-24 px-6">
+      <main className="min-h-screen bg-white px-6 pt-24">
         <div className="text-center">Loading...</div>
       </main>
     )
   }
 
   return (
-    <main className="min-h-screen bg-white pt-24 px-6">
+    <main className="min-h-screen bg-white px-6 pt-24">
       <CarRentalForm
         mode="edit"
         defaultData={defaultData}
         onSubmit={handleSubmit}
-        onCancel={() => router.back()}
+        onCancel={() => router.push(`/admin/car-rentals/${id}`)}
         isSubmitting={isSubmitting}
       />
     </main>

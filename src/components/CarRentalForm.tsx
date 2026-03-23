@@ -2,6 +2,7 @@
 
 import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import { CarRentalItem } from "../../interface"
+import { convertGoogleDriveUrl } from "@/libs/function/convertGoogleDriveUrl"
 
 type CarRentalFormProps = {
   mode?: "create" | "edit"
@@ -30,8 +31,13 @@ export default function CarRentalForm({
     picture: "",
   })
 
+  const [preview, setPreview] = useState("")
+  const [imageError, setImageError] = useState(false)
+
   useEffect(() => {
     if (!defaultData) return
+
+    const pictureUrl = defaultData.picture ?? ""
 
     setFormData({
       name: defaultData.name ?? "",
@@ -42,18 +48,31 @@ export default function CarRentalForm({
       tel: defaultData.tel ?? "",
       region: defaultData.region ?? "",
       car: defaultData.car && defaultData.car.length > 0 ? defaultData.car : [""],
-      picture: defaultData.picture ?? "",
+      picture: pictureUrl,
     })
+
+    setPreview(convertGoogleDriveUrl(pictureUrl))
+    setImageError(false)
   }, [defaultData])
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
+
+    if (name === "picture") {
+      setFormData((prev) => ({
+        ...prev,
+        picture: value,
+      }))
+      setPreview(convertGoogleDriveUrl(value))
+      setImageError(false)
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }))
+    }
   }
 
   const handleCarChange = (index: number, value: string) => {
@@ -97,6 +116,7 @@ export default function CarRentalForm({
 
     const cleanedData: CarRentalItem = {
       ...formData,
+      picture: formData.picture ?? "",
       car: (formData.car ?? [])
         .map((item) => item.trim())
         .filter((item) => item !== ""),
@@ -108,23 +128,31 @@ export default function CarRentalForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-4xl mx-auto bg-[#f3ecff] rounded-3xl p-6 md:p-8 shadow-sm"
+      className="mx-auto max-w-4xl rounded-3xl bg-[#f3ecff] p-6 shadow-sm md:p-8"
     >
-      <h1 className="text-center text-2xl md:text-3xl font-bold text-[#5b52c8] mb-8 uppercase">
+      <h1 className="mb-8 text-center text-2xl font-bold uppercase text-[#5b52c8] md:text-3xl">
         {mode === "create" ? "Add Car Rental" : "Edit Car Rental Details"}
       </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-[220px_1fr]">
         <div className="flex flex-col items-center">
-          <div className="w-full aspect-square rounded-3xl bg-[#f5f2df] border border-[#e8e0c8] flex items-center justify-center overflow-hidden">
-            {formData.picture ? (
+          <div className="flex aspect-square w-full items-center justify-center overflow-hidden rounded-3xl border border-[#e8e0c8] bg-[#f5f2df]">
+            {preview && !imageError ? (
               <img
-                src={formData.picture}
+                src={preview}
                 alt="car rental"
-                className="w-full h-full object-cover"
+                className="h-full w-full object-cover"
+                onError={() => setImageError(true)}
               />
             ) : (
-              <span className="text-5xl text-gray-500">+</span>
+              <div className="flex flex-col items-center justify-center px-4 text-center">
+                <span className="text-5xl text-gray-500">+</span>
+                {formData.picture ? (
+                  <p className="mt-2 break-all text-xs text-red-500">
+                    Image preview unavailable
+                  </p>
+                ) : null}
+              </div>
             )}
           </div>
 
@@ -159,7 +187,7 @@ export default function CarRentalForm({
             required
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <input
               type="text"
               name="district"
@@ -191,7 +219,7 @@ export default function CarRentalForm({
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <input
               type="text"
               name="tel"
@@ -235,7 +263,7 @@ export default function CarRentalForm({
                   <button
                     type="button"
                     onClick={() => removeCarField(index)}
-                    className="w-9 h-9 rounded-full bg-pink-200 text-pink-700"
+                    className="h-9 w-9 rounded-full bg-pink-200 text-pink-700"
                   >
                     ×
                   </button>
@@ -246,7 +274,7 @@ export default function CarRentalForm({
             <button
               type="button"
               onClick={addCarField}
-              className="mt-3 px-4 py-2 rounded-full bg-white border border-gray-300"
+              className="mt-3 rounded-full border border-gray-300 bg-white px-4 py-2"
             >
               + Add car
             </button>
@@ -254,7 +282,7 @@ export default function CarRentalForm({
         </div>
       </div>
 
-      <div className="flex items-center justify-center gap-6 mt-10">
+      <div className="mt-10 flex items-center justify-center gap-6">
         <button
           type="button"
           onClick={onCancel}
@@ -271,8 +299,8 @@ export default function CarRentalForm({
           {isSubmitting
             ? "Submitting..."
             : mode === "create"
-            ? "Add car rental"
-            : "Confirm"}
+              ? "Add car rental"
+              : "Confirm"}
         </button>
       </div>
     </form>
