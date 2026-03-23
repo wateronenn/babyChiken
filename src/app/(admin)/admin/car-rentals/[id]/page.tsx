@@ -9,8 +9,7 @@ export default async function Page({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const res: any = await getCarRentalById(id)
-  const item = res?.data
+  const item = await getCarRentalById(id)
 
   if (!item) {
     return (

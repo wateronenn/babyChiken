@@ -23,8 +23,7 @@ export default function EditCarRentalPage() {
       try {
         setIsLoading(true)
 
-        const res: any = await getCarRentalById(id)
-        const item: CarRentalResponse = res?.data
+        const item: CarRentalResponse = await getCarRentalById(id)
 
         if (!item) {
           alert("Car rental not found")

@@ -23,11 +23,6 @@ export async function createCarRental(
   data: CarRentalItem,
   token: string
 ): Promise<CarRentalResponse> {
-  console.log("👉 CREATE API CALL")
-  console.log("👉 URL:", BACKEND_URL)
-  console.log("👉 PAYLOAD:", data)
-  console.log("👉 TOKEN:", token)
-
   const res = await fetch(BACKEND_URL, {
     method: "POST",
     headers: {
@@ -37,21 +32,15 @@ export async function createCarRental(
     body: JSON.stringify(data),
   })
 
-  let json
-  try {
-    json = await res.json()
-  } catch {
-    json = null
-  }
-
-  console.log("👉 STATUS:", res.status)
-  console.log("👉 RESPONSE:", json)
+  const json = await res.json()
+  console.log("CREATE STATUS:", res.status)
+  console.log("CREATE RESPONSE:", json)
 
   if (!res.ok) {
-    throw new Error(json?.message || "Failed to create car rental")
+    throw new Error(json?.message || JSON.stringify(json) || "Failed to create car rental")
   }
 
-  return json
+  return json.data
 }
 
 export async function updateCarRental(
