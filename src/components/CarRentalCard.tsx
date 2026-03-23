@@ -1,10 +1,13 @@
 import Link from "next/link"
+import { convertGoogleDriveUrl } from "@/libs/function/convertGoogleDriveUrl"
 
 type CarRentalCardProps = {
   item: {
     _id: string
     name: string
     address: string
+    district: string
+    province: string
     tel?: string
     car?: string[]
     picture?: string
@@ -19,9 +22,9 @@ export default function CarRentalCard({ item, href }: CarRentalCardProps) {
       <div className="flex items-center gap-5 rounded-[28px] bg-[#b7b0ff] px-6 py-4 shadow-md transition hover:scale-[1.01]">
         <div className="flex h-[120px] w-[120px] shrink-0 items-center justify-center overflow-hidden rounded-[24px] bg-white">
           <img
-            src={item.picture || "/img/logo.png"}
+            src={convertGoogleDriveUrl(item.picture)}
             alt={item.name}
-            className="h-[72px] w-[94px] object-contain"
+            className="h-full w-full object-cover"
           />
         </div>
 
@@ -30,13 +33,15 @@ export default function CarRentalCard({ item, href }: CarRentalCardProps) {
             {item.name}
           </h2>
 
-          <p className="text-[16px] text-black/80">
-            {item.address}
-          </p>
+          <div className="text-[16px] text-black/80">
+            <p>{item.address}</p>
+            <p className="text-[14px] text-black/60">
+              📍 {[item.district, item.province].filter(Boolean).join(", ")}
+            </p>
+          </div>
 
           <div className="mt-4 text-black">
-            <div className="text-[16px]">👤 {item.rents?.length || 0}</div>
-            <div className="text-[14px] tracking-wide">★★★★☆</div>
+            <div className="text-[16px]">👤 {item.rents?.length || 0} คนเคยเช่า</div>
           </div>
         </div>
 
