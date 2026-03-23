@@ -7,11 +7,13 @@ import CarRentalForm from "@/components/CarRentalForm"
 import { CarRentalItem } from "../../../../../../interface"
 import { createCarRental } from "@/libs/function/carRental"
 import { convertGoogleDriveUrl } from "@/libs/function/convertGoogleDriveUrl"
+export const dynamic = "force-dynamic"
 
 export default function CreateCarRentalPage() {
   const router = useRouter()
   const { data: session } = useSession()
   const [isSubmitting, setIsSubmitting] = useState(false)
+
 
   const handleSubmit = async (data: CarRentalItem) => {
     const token = (session?.user as any)?.token
@@ -36,7 +38,7 @@ export default function CreateCarRentalPage() {
 
       alert("Create car rental successfully")
       router.push("/admin/car-rentals")
-      router.refresh()
+     // router.refresh()
     } catch (error) {
       console.error("create error:", error)
       alert("Failed to create car rental")
