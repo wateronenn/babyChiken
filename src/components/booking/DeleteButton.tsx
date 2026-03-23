@@ -2,12 +2,12 @@
 import { deleteRent } from "@/libs/function/Rent"
 import { useRouter } from "next/navigation"
 
-export default function CancelButton({bid, token}: {bid: string, token: string}) {
+export default function DeleteButton({bid, token}: {bid: string, token: string}) {
     const router = useRouter()
     
     const handleCancel = async () => {
         await deleteRent(bid, token)
-        router.push('/booking')
+        router.push('/bookings')
     }
 
     return (

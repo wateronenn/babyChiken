@@ -1,3 +1,4 @@
+import { json } from "stream/consumers";
 import { RentResponse, RentItem, RentJson } from "../../../interface";
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL + '/rents';
 
@@ -22,7 +23,8 @@ export async function createRent(
   data: RentItem,
   token: string
 ): Promise<RentResponse> {
-  const res = await fetch(BACKEND_URL, {
+  const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL
+  const res = await fetch(`${BASE_URL}/carRentals/${data.carRental}/rents`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -30,8 +32,9 @@ export async function createRent(
     },
     body: JSON.stringify(data),
   });
-  if (!res.ok) throw new Error('Failed to create rent');
-  return res.json();
+  const json = await res.json()
+  if (!res.ok) throw new Error(json.message);
+  return json.data;
 }
 
 export async function updateRent(

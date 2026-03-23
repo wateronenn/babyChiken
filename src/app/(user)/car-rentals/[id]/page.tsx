@@ -117,7 +117,7 @@ export default async function Page({
                   </button>
                 </Link>
 
-                <Link href="/bookings">
+                <Link href={`/bookings/${id}/create`} key={id}>
                   <button className="rounded-full bg-[var(--color-second-purple)] px-7 py-3 font-medium text-white shadow-sm transition hover:scale-[1.02]">
                     Book Now
                   </button>

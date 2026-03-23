@@ -22,6 +22,8 @@ export interface CarRentalResponse {
   region: string;
   car?: string[];
   picture?: string;
+  pricePerDay?: Number
+  rentedUser?: Number
   rents?: RentResponse[];
 }
 
