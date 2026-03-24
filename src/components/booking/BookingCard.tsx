@@ -11,7 +11,7 @@ export default function BookingCard({rentItem}:{rentItem:RentResponse}) {
 
     return (
         <InteractiveBookingCard>
-            <div className="flex h-[120px] w-[120px] shrink-0 items-center justify-center overflow-hidden rounded-[24px] bg-[var(--color-pastel-yellow)]">
+            <div className="flex h-[150px] w-[150px] shrink-0 items-center justify-center overflow-hidden rounded-[24px] bg-[var(--color-pastel-yellow)]">
                 {
                     carRental?.picture ?
                     <Image
@@ -26,18 +26,16 @@ export default function BookingCard({rentItem}:{rentItem:RentResponse}) {
                 }
             </div>
             <div>
-                <h2 className="text-[22px] font-medium">
-                    {rentItem._id}
-                </h2>
-                <h3 className='text-[1.25em]'>
+                <h2 className="text-2xl font-medium">
                     {carRental?.name}
-                </h3>
-                <h3 className='text-[1.25em]'>
-                    {rentItem.car}
-                </h3>
-                <h3 className='text-[1.25em]'>
-                    {formatDate(rentItem.startDate)} - {formatDate(rentItem.endDate)}
-                </h3>
+                </h2>
+                <div className="text-[16px] py-2">
+                    <p>{carRental?.name}</p>
+                    <p>🚗 {rentItem.car}</p>
+                </div>
+                <div className="mt-4 text-[16px]">
+                    🗓️ {formatDate(rentItem.startDate)} - {formatDate(rentItem.endDate)}
+                </div>
             </div>
             <div className="ml-auto pr-2 text-[52px] font-light">
                 ›

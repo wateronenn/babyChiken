@@ -2,7 +2,9 @@ import Link from "next/link"
 import CarRentalCard from "@/components/CarRentalCard"
 import { getCarRentals } from "@/libs/function/carRental"
 import SearchForm from "@/components/SearchForm"
+import { CarRentalResponse } from "../../../../../interface"
 export const dynamic = "force-dynamic"
+
 type PageProps = {
   searchParams?: Promise<{
     search?: string
@@ -13,11 +15,14 @@ export default async function Page({ searchParams }: PageProps) {
   const resolvedSearchParams = await searchParams
   const search = resolvedSearchParams?.search?.trim() || ""
 
-  const res: any = await getCarRentals(search)
-  const carRentals = res?.data || []
+  const carRentalsJson = (await getCarRentals(search)) as unknown as {
+    data?: CarRentalResponse[]
+  }
+
+  const carRentals = carRentalsJson?.data || []
 
   const filteredCarRentals = carRentals
-
+  
   return (
     <main className="min-h-screen bg-[#f4f4f4] pt-16">
       <section className="relative h-[260px] w-full overflow-hidden">

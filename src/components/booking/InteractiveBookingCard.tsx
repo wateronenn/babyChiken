@@ -26,7 +26,7 @@ export default function InteractiveBookingCard({children} : {children:React.Reac
     }
     
     return (
-        <div className="w-full flex items-center gap-5 rounded-[28px] bg-[var(--color-primary-blue)] px-6 py-4 shadow-md transition hover:scale-[1.01]"
+        <div className="w-full flex items-center gap-10 rounded-[28px] bg-[var(--color-primary-blue)] px-6 py-4 shadow-md transition hover:scale-[1.01]"
         onMouseEnter={(e)=>onCardMouseAction(e)}
         onMouseLeave={(e)=>onCardMouseAction(e)}
         >
