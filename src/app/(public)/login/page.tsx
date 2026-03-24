@@ -17,6 +17,7 @@ export default function LoginPage() {
     if (res?.ok) {
       const session = await getSession();
       alert('Login successful');
+      console.log('session?.user.role')
       if (session?.user.role === 'admin') {
         router.push('/admin');
       } else {
