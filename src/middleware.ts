@@ -6,4 +6,8 @@ export const config = {
     '/admin/:path*',
   ],
 };
-export default withAuth({})
+export default withAuth({
+  pages: {
+    signIn: "/login",
+  },
+});
