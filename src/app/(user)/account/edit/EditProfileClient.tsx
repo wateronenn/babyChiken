@@ -14,8 +14,7 @@ export default function EditProfileClient({ user, token }: any) {
     email : user.email,
     tel: user.tel,
     picture:
-      user.picture ||
-      "https://drive.google.com/uc?export=view&id=1lB7fw5c1ZdP_Xb3TGQg4M2JGyfYP-y6O",
+      "/img/profile.jpg",
   });
 
   const handleChange = (e: any) => {
