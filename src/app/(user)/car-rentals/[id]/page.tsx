@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { convertGoogleDriveUrl } from "@/libs/function/convertGoogleDriveUrl"
-import StyledButton from "@/components/StyledButton"
+import StyledButton from "@/components/StyledButtonCarRental"
 
 export default async function Page({
   params,

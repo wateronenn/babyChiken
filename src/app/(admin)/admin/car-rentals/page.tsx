@@ -1,4 +1,4 @@
-import StyledButton from "@/components/StyledButton"
+import StyledButton from "@/components/StyledButtonCarRental"
 import CarRentalCard from "@/components/CarRentalCard"
 import { getCarRentals } from "@/libs/function/carRental"
 import SearchForm from "@/components/SearchForm"
