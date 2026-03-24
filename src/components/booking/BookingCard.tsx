@@ -34,19 +34,19 @@ export default function BookingCard({rentItem, isAdmin}:{rentItem:RentResponse, 
             {
                 isAdmin ? 
                 <div className="flex flex-col justify-between h-full py-1 min-h-[150px]">
-                    <h2 className="text-2xl font-medium">
-                        #{rentItem._id}
-                    </h2>
+                    <div>
+                        {
+                            rentItem.user === null ? null
+                            : typeof rentItem.user === 'object' 
+                            ? <h2 className="text-2xl font-medium">{rentItem.user.username}</h2>
+                            : <h2 className="text-2xl font-medium">{rentItem.user}</h2>
+                        }
+                        <p>ID: {rentItem._id}</p>
+                    </div>
                     <div className="text-[16px]">
                         <p><span className="mr-3">📍</span>{carRental?.name}</p>
                         <p><span className="mr-3">🚗</span>{rentItem.car}</p>
                         <p><span className="mr-3">🗓️</span>{formatDate(rentItem.startDate)} - {formatDate(rentItem.endDate)}</p>
-                        {
-                            rentItem.user === null ? null
-                            : typeof rentItem.user === 'object' 
-                            ? <div><span className="mr-3">👤</span>by {rentItem.user.username}</div>
-                            : <div><span className="mr-3">👤</span>by {rentItem.user}</div>
-                        }
                     </div>
                 </div>
                 : <div className="flex flex-col justify-between h-full py-1 min-h-[150px]">
