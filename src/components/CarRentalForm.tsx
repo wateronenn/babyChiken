@@ -3,7 +3,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import { CarRentalItem } from "../../interface"
 import { convertGoogleDriveUrl } from "@/libs/function/convertGoogleDriveUrl"
-import StyledButton from "@/components/StyledButton"
+import StyledButton from "@/components/StyledButtonCarRental"
 
 type CarRentalFormProps = {
   mode?: "create" | "edit"
