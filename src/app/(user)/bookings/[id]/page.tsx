@@ -41,17 +41,14 @@ export default async function BookingDetailPage({params} : {params:Promise<{id:s
         <div className="w-full shrink-0 md:w-[260px]">
           
           <div className="flex h-[240px] w-full items-center justify-center rounded-[28px] bg-[var(--color-pastel-yellow)] p-5">
-            {
-              carRental.picture &&
               <Image
-                src={convertGoogleDriveUrl(carRental.picture)}
+                src={convertGoogleDriveUrl(carRental?.picture)}
                 alt="Car Image"
                 width={0}
                 height={0}
                 sizes="100vw"
                 className="h-full w-full object-contain"
               />
-            }
           </div>
 
           <div className="mt-5 rounded-[24px] bg-white/40 p-4 text-black">
