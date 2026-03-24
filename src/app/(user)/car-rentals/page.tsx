@@ -11,25 +11,15 @@ type PageProps = {
 
 export default async function Page({ searchParams }: PageProps) {
   const resolvedSearchParams = await searchParams
-  const search = resolvedSearchParams?.search?.trim() || ""
+const search = resolvedSearchParams?.search?.trim() || ""
 
-  const rentalsJson = (await getCarRentals()) as unknown as {
-    data?: CarRentalResponse[]
-  }
+const rentalsJson = (await getCarRentals(search)) as unknown as {
+  data?: CarRentalResponse[]
+}
 
-  const rentals = rentalsJson?.data || []
+const rentals = rentalsJson?.data || []
 
-  const filteredRentals = rentals.filter((item) => {
-    const keyword = search.toLowerCase()
-
-    return (
-      item.name.toLowerCase().includes(keyword) ||
-      item.address.toLowerCase().includes(keyword) ||
-      item.province.toLowerCase().includes(keyword) ||
-      item.district.toLowerCase().includes(keyword) ||
-      item.region.toLowerCase().includes(keyword)
-    )
-  })
+const filteredRentals = rentals
 
   return (
     <main className="min-h-screen bg-white pt-16">
