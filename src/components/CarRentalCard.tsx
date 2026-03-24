@@ -41,7 +41,7 @@ export default function CarRentalCard({ item, href }: CarRentalCardProps) {
           </div>
 
           <div className="mt-4 text-black">
-            <div className="text-[16px]">👤 {item.rents?.length || 0} คนเคยเช่า</div>
+            <div className="text-[16px]">👤 {item.rents?.length || 0} rentals</div>
           </div>
         </div>
 

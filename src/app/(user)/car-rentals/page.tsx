@@ -50,7 +50,7 @@ export default async function Page({ searchParams }: PageProps) {
 
           <div className="relative z-10 flex h-full items-center px-10">
             <div>
-              <h1 className="text-4xl font-bold text-white drop-shadow">
+              <h1 className="text-4xl font-bold text-white drop-shadow ">
                 Find Your Ride
               </h1>
               <p className="mt-2 text-white/90">Easy booking ✨</p>
@@ -58,13 +58,13 @@ export default async function Page({ searchParams }: PageProps) {
           </div>
         </div>
 
-        <div className="mt-6 flex flex-col items-center">
+        <div className="mt-6 pt-6 pb-10 flex flex-col items-center">
           <h1 className="text-5xl font-semibold text-[var(--color-second-purple)]">
             Car Rental
           </h1>
         </div>
 
-        <SearchForm color="purple" defaultValue={search} action="/car-rentals"/>
+        <SearchForm color="purple" defaultValue={search} action="/car-rentals" />
 
         <div className="mb-6 text-sm text-gray-500">
           {search ? (
