@@ -3,6 +3,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import { CarRentalItem } from "../../interface"
 import { convertGoogleDriveUrl } from "@/libs/function/convertGoogleDriveUrl"
+import StyledButton from "@/components/StyledButton"
 
 type CarRentalFormProps = {
   mode?: "create" | "edit"
@@ -282,26 +283,18 @@ export default function CarRentalForm({
         </div>
       </div>
 
-      <div className="mt-10 flex items-center justify-center gap-6">
-        <button
-          type="button"
-          onClick={onCancel}
-          className="min-w-[140px] rounded-full bg-[#f4b8b8] px-6 py-2.5 text-white"
-        >
-          Cancel
-        </button>
+      <div className="mt-10 flex justify-between">
+        <StyledButton
+          title="Cancel"
+          color="red"
+          href="/admin/car-rentals"
+        />
 
-        <button
+        <StyledButton
+          title="Confirm"
           type="submit"
-          disabled={isSubmitting}
-          className="min-w-[140px] rounded-full bg-[#9e95ff] px-6 py-2.5 text-white disabled:opacity-60"
-        >
-          {isSubmitting
-            ? "Submitting..."
-            : mode === "create"
-              ? "Add car rental"
-              : "Confirm"}
-        </button>
+          loading={isSubmitting}
+        />
       </div>
     </form>
   )

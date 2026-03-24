@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { convertGoogleDriveUrl } from "@/libs/function/convertGoogleDriveUrl"
+import StyledButton from "@/components/StyledButton"
 
 export default async function Page({
   params,
@@ -35,7 +36,7 @@ export default async function Page({
   return (
     <main className="min-h-screen bg-[#f7f7fb] px-6 pt-24">
       <div className="mx-auto max-w-5xl">
-        <div className="rounded-[32px] bg-[var(--color-primary-purple)] p-8 shadow-[0_16px_40px_rgba(0,0,0,0.12)]">
+        <div className="rounded-[32px] bg-[#F4EBFF] p-8 shadow-[0_16px_40px_rgba(0,0,0,0.12)]">
           <div className="flex flex-col gap-8 md:flex-row">
             <div className="w-full shrink-0 md:w-[260px]">
               <div className="flex h-[240px] w-full items-center justify-center rounded-[28px] bg-white p-5">
@@ -110,17 +111,17 @@ export default async function Page({
               </div>
 
               <div className="mt-8 flex items-center justify-between">
-                <Link href="/car-rentals">
-                  <button className="rounded-full bg-[var(--color-primary-blue)] px-6 py-3 font-medium text-black shadow-sm transition hover:scale-[1.02]">
-                    Back
-                  </button>
-                </Link>
 
-                <Link href={`/bookings/${id}/create`} key={id}>
-                  <button className="rounded-full bg-[var(--color-second-purple)] px-7 py-3 font-medium text-white shadow-sm transition hover:scale-[1.02]">
-                    Book Now
-                  </button>
-                </Link>
+                <StyledButton
+                  title="Back"
+                  color="blue"
+                  href="/car-rentals"
+                />
+
+                <StyledButton
+                  title="Book Now"
+                  href={`/bookings/${id}/create`}
+                />
               </div>
             </div>
           </div>

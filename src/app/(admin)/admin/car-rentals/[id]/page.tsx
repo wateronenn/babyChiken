@@ -1,4 +1,4 @@
-import Link from "next/link"
+import StyledButton from "@/components/StyledButton"
 import { getCarRentalById } from "@/libs/function/carRental"
 import { convertGoogleDriveUrl } from "@/libs/function/convertGoogleDriveUrl"
 import DeleteCarRentalButton from "@/components/DeleteCarRentalButton"
@@ -25,10 +25,10 @@ export default async function Page({
   return (
     <main className="min-h-screen bg-[#f7f7fb] px-6 pt-24">
       <div className="mx-auto max-w-5xl">
-        <div className="rounded-[32px] bg-[var(--color-primary-purple)] p-8 shadow-[0_16px_40px_rgba(0,0,0,0.12)]">
+        <div className="rounded-[32px] bg-[#F4EBFF] p-8 shadow-[0_16px_40px_rgba(0,0,0,0.12)]">
           <div className="flex flex-col gap-8 md:flex-row">
             <div className="w-full shrink-0 md:w-[260px]">
-              <div className="flex h-[240px] w-full items-center justify-center rounded-[28px] bg-white] p-5">
+              <div className="flex h-[240px] w-full items-center justify-center rounded-[28px] bg-white p-5">
                 <img
                   src={convertGoogleDriveUrl(item.picture)}
                   alt={item.name || "car rental"}
@@ -101,20 +101,18 @@ export default async function Page({
               </div>
 
               <div className="mt-8 flex items-center justify-between">
-                <Link
+                <StyledButton
+                  color="blue"
+                  title="Back"
                   href="/admin/car-rentals"
-                  className="rounded-full bg-[var(--color-primary-blue)] px-6 py-3 font-medium text-black shadow-sm transition hover:scale-[1.02]"
-                >
-                  Back
-                </Link>
+                />
 
                 <div className="flex items-center gap-4">
-                  <Link
+                  <StyledButton
+                    color="purple"
+                    title="Edit"
                     href={`/admin/car-rentals/${item._id}/edit`}
-                    className="rounded-full bg-[var(--color-second-purple)] px-7 py-3 font-medium text-white shadow-sm transition hover:scale-[1.02]"
-                  >
-                    Edit
-                  </Link>
+                  />
 
                   <DeleteCarRentalButton id={item._id} name={item.name} />
                 </div>

@@ -1,4 +1,4 @@
-import Link from "next/link"
+import StyledButton from "@/components/StyledButton"
 import CarRentalCard from "@/components/CarRentalCard"
 import { getCarRentals } from "@/libs/function/carRental"
 import SearchForm from "@/components/SearchForm"
@@ -48,15 +48,13 @@ export default async function Page({ searchParams }: PageProps) {
 
       <section className="mx-auto max-w-5xl px-6 py-10">
         <div className="mb-10 flex justify-center">
-          <Link
+          <StyledButton
+            title="Add Car Rental"
             href="/admin/car-rentals/create"
-            className="rounded-full bg-[#b7b0ff] px-10 py-4 text-xl text-white shadow-md transition hover:scale-[1.02]"
-          >
-            add car rental
-          </Link>
+          />
         </div>
 
-        <SearchForm color="purple" defaultValue={search} action="/admin/car-rentals/"/>
+        <SearchForm color="purple" defaultValue={search} action="/admin/car-rentals/" />
 
         <div className="mb-6 text-sm text-gray-500">
           {search ? (
