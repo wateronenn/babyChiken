@@ -11,5 +11,12 @@ export default async function CreateBookingPage({params}: {params: Promise<{id: 
     const {id} = await params
     const carRental = await getCarRentalById(id)
 
-    return <CreateBookingForm token={session.user.token} carRentalItem={carRental}/>
+    return (
+        <main>
+            <h1 className="text-[var(--color-second-purple)] text-3xl font-bold">
+                Create Your Bookings
+            </h1>
+            <CreateBookingForm token={session.user.token} carRentalItem={carRental}/>
+        </main>
+    )
 }
