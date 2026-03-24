@@ -5,7 +5,7 @@ import { getServerSession } from "next-auth";
 import Image from "next/image";
 import { formatDate } from "../../../../../../../utils";
 import { CarRentalResponse } from "../../../../../../../interface";
-import StyledButton from "@/components/booking/Button";
+import StyledButton from "@/components/StyledButton";
 
 export default async function SuccessBookingPage({params}: {params: Promise<{id: string}>}) {
 
