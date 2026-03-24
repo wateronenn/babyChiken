@@ -14,5 +14,12 @@ export default async function EditBookingPage({params}: {params: Promise<{id: st
     const carRentalId = typeof rent.carRental === 'string' ? rent.carRental : rent.carRental._id
     const carRental = await getCarRentalById(carRentalId)
 
-    return <EditBookingForm bid={id} token={session.user.token} rentItem={rent} carRentalItem={carRental}/>
+    return (
+        <main className="flex flex-col items-center justify-center min-h-screen">
+            <h1 className="text-[var(--color-second-purple)] text-3xl font-bold">
+                Edit Booking
+            </h1>
+            <EditBookingForm bid={id} token={session.user.token} rentItem={rent} carRentalItem={carRental} isAdmin={session.user.role === 'admin'}/>
+        </main>
+    )
 }

@@ -6,6 +6,7 @@ import { CarRentalResponse } from "../../../../../interface";
 import { formatDate } from "../../../../../utils";
 import Link from "next/link";
 import DeleteButton from "@/components/booking/DeleteButton";
+import StyledButton from "@/components/StyledButton";
 
 export default async function BookingDetailPage({params} : {params:Promise<{id:string}>}) {
 
@@ -20,6 +21,13 @@ export default async function BookingDetailPage({params} : {params:Promise<{id:s
     : null
 
     if (!carRental) return <h1 className="text-center text-xl my-5">CarRental not found</h1>
+
+    //calculate total price
+    const start = new Date(bookingDetail.startDate)
+    const end = new Date(bookingDetail.endDate)
+    const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24))
+    const pricePerDay = carRental.pricePerDay ?? 0
+    const totalPrice = days * Number(pricePerDay)
 
     return (
         <main className="min-h-screen bg-[#f7f7fb] px-6 pt-24">
@@ -48,9 +56,9 @@ export default async function BookingDetailPage({params} : {params:Promise<{id:s
           <div className="mt-5 rounded-[24px] bg-white/40 p-4 text-black">
             <h2 className="text-lg font-semibold">Booking Summary</h2>
             <div className="mt-3 space-y-2 text-sm">
-              <p>🚗 {bookingDetail.car}</p>
-              <p>🗓️ {formatDate(bookingDetail.startDate)} - {formatDate(bookingDetail.endDate)}</p>
-              <p>💰 1000 baht</p>
+              <p><span className="mr-3">🚗</span>{bookingDetail.car}</p>
+              <p><span className="mr-3">🗓️</span>{formatDate(bookingDetail.startDate)} - {formatDate(bookingDetail.endDate)}</p>
+              <p><span className="mr-3">💰</span>{totalPrice} baht</p>
             </div>
           </div>
         </div>
@@ -88,34 +96,28 @@ export default async function BookingDetailPage({params} : {params:Promise<{id:s
               <p className="mt-1 text-black">{formatDate(bookingDetail.endDate)}</p>
             </div>
 
-            <div className="rounded-[22px] bg-white/35 p-4 sm:col-span-2">
+            <div className="rounded-[22px] bg-white/35 p-4">
+              <p className="text-sm font-medium text-black/60">Price Per Day</p>
+              <p className="mt-1 text-black">{carRental.pricePerDay ?? 0}</p>
+            </div>
+
+            <div className="rounded-[22px] bg-white/35 p-4">
               <p className="text-sm font-medium text-black/60">Total Price</p>
-              <p className="mt-1 text-black">-- calculate later --</p>
+              <p className="mt-1 text-black">{totalPrice}</p>
             </div>
 
           </div>
 
           {/* ACTION BUTTONS */}
           <div className="mt-8 flex items-center justify-between">
-            
-            <Link
-              href="/bookings"
-              className="rounded-full bg-[var(--color-primary-purple)] px-6 py-3 font-medium text-white shadow-sm transition hover:scale-[1.02]"
-            >
-              Back
-            </Link>
+                      
+            <StyledButton color="purple" title="Back" pageRef="/bookings"/>
 
             <div className="flex items-center gap-4">
               
-              <Link
-                href={`/bookings/${bookingDetail._id}/edit`}
-                className="rounded-full bg-[var(--color-second-blue)] px-7 py-3 font-medium text-white shadow-sm transition hover:scale-[1.02]"
-              >
-                Edit
-              </Link>
-
-              <DeleteButton bid={bookingDetail._id} token={session.user.token}/>
-              
+                <StyledButton color="purple" title="Edit"
+                pageRef={`/bookings/${bookingDetail._id}/edit`}/>
+                <DeleteButton bid={bookingDetail._id} token={session.user.token}/>
             </div>
           </div>
 

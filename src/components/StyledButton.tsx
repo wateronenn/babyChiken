@@ -7,14 +7,17 @@ export default function StyledButton({color, title, pageRef, type, onClick} : {
   title:string,
   pageRef?:string,
   type?: 'button' | 'submit' | 'reset',
-  onClick?:Function}) {
+  onClick?: () => void}) {
 
     const colorClass =
     color === 'purple'
       ? "bg-[var(--color-second-purple)] hover:bg-[var(--color-primary-purple)]"
       : "bg-[var(--color-primary-red)] hover:bg-[var(--color-second-red)]"
 
-    const button = ( <Button
+    return( 
+      <Button
+        component={pageRef ? Link : 'button'}
+        href={pageRef}
         type={type ?? 'button'}
         onClick={() => onClick?.()}
         sx={{
@@ -38,8 +41,6 @@ export default function StyledButton({color, title, pageRef, type, onClick} : {
         }}
       >
         {title}
-      </Button>
-    )
-
-    return pageRef ? <Link href={pageRef}>{button}</Link> : button
+    </Button>
+  )
 }

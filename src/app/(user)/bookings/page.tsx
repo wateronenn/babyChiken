@@ -13,8 +13,8 @@ export default async function Booking() {
     const rents = getManyRents(session.user.token)
 
     return (
-        <main className="w-[100%] flex flex-col items-center py-10 space-y-10">
-            <h1 className="text-[var(--color-second-purple)] text-3xl font-bold">
+        <main className="w-[100%] min-h-screen flex flex-col items-center py-10">
+            <h1 className="text-[var(--color-second-purple)] text-3xl font-bold m-10">
                 Your Bookings
             </h1>
             <BookingCardCatalog rentJson={rents} isAdmin={session.user.role === 'admin'}/>
