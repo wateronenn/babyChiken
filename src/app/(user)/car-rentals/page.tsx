@@ -11,15 +11,15 @@ type PageProps = {
 
 export default async function Page({ searchParams }: PageProps) {
   const resolvedSearchParams = await searchParams
-const search = resolvedSearchParams?.search?.trim() || ""
+  const search = resolvedSearchParams?.search?.trim() || ""
 
-const rentalsJson = (await getCarRentals(search)) as unknown as {
-  data?: CarRentalResponse[]
-}
+  const carRentalsJson = (await getCarRentals(search)) as unknown as {
+    data?: CarRentalResponse[]
+  }
 
-const rentals = rentalsJson?.data || []
+  const carRentals = carRentalsJson?.data || []
 
-const filteredRentals = rentals
+  const filteredCarRentals = carRentals
 
   return (
     <main className="min-h-screen bg-white pt-16">
@@ -67,8 +67,8 @@ const filteredRentals = rentals
         </div>
 
         <div className="space-y-5 px-14 py-8">
-          {filteredRentals.length > 0 ? (
-            filteredRentals.map((item) => (
+          {filteredCarRentals.length > 0 ? (
+            filteredCarRentals.map((item) => (
               <CarRentalCard
                 key={item._id}
                 href={`/car-rentals/${item._id}`}

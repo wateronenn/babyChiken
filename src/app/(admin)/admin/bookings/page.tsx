@@ -56,7 +56,7 @@ export default async function Booking({ searchParams }: PageProps) {
                     <p>Showing all Bookings</p>
                 )}
             </div>
-            <BookingCardCatalog rentJson={filteredRents}/>
+            <BookingCardCatalog rentJson={filteredRents} isAdmin={session.user.role === 'admin'}/>
         </main>
     )
 }

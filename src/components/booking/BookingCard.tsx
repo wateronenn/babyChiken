@@ -3,15 +3,21 @@ import InteractiveBookingCard from "./InteractiveBookingCard";
 import { CarRentalResponse, RentResponse } from "../../../interface";
 import { formatDate, getCarRentalName } from "../../../utils";
 
-export default function BookingCard({rentItem}:{rentItem:RentResponse}) {
+export default function BookingCard({rentItem, isAdmin}:{rentItem:RentResponse, isAdmin:boolean}) {
 
     const carRental = typeof rentItem.carRental === 'object' 
         ? rentItem.carRental as CarRentalResponse
         : null
 
+    const carRentalName = rentItem.carRental && typeof rentItem.carRental === 'object'
+    ? rentItem.carRental.name
+    : typeof rentItem.carRental === 'string'
+    ? rentItem.carRental
+    : 'Unknown'
+
     return (
         <InteractiveBookingCard>
-            <div className="flex h-[120px] w-[120px] shrink-0 items-center justify-center overflow-hidden rounded-[24px] bg-[var(--color-pastel-yellow)]">
+            <div className="flex h-[150px] w-[150px] shrink-0 items-center justify-center overflow-hidden rounded-[24px] bg-[var(--color-pastel-yellow)]">
                 {
                     carRental?.picture ?
                     <Image
@@ -25,20 +31,41 @@ export default function BookingCard({rentItem}:{rentItem:RentResponse}) {
                     : null
                 }
             </div>
-            <div>
-                <h2 className="text-[22px] font-medium">
-                    {rentItem._id}
-                </h2>
-                <h3 className='text-[1.25em]'>
-                    {carRental?.name}
-                </h3>
-                <h3 className='text-[1.25em]'>
-                    {rentItem.car}
-                </h3>
-                <h3 className='text-[1.25em]'>
-                    {formatDate(rentItem.startDate)} - {formatDate(rentItem.endDate)}
-                </h3>
-            </div>
+            {
+                isAdmin ? 
+                <div className="flex flex-col justify-between h-full py-1 min-h-[150px]">
+                    <div>
+                        {
+                            rentItem.user === null ? null
+                            : typeof rentItem.user === 'object' 
+                            ? <h2 className="text-2xl font-medium">{rentItem.user.username}</h2>
+                            : <h2 className="text-2xl font-medium">{rentItem.user}</h2>
+                        }
+                        <p>ID: {rentItem._id}</p>
+                    </div>
+                    <div className="text-[16px]">
+                        <p><span className="mr-3">📍</span>{carRental?.name}</p>
+                        <p><span className="mr-3">🚗</span>{rentItem.car}</p>
+                        <p><span className="mr-3">🗓️</span>{formatDate(rentItem.startDate)} - {formatDate(rentItem.endDate)}</p>
+                    </div>
+                </div>
+                : <div className="flex flex-col justify-between h-full py-1 min-h-[150px]">
+                    <div>
+                        <h2 className="text-2xl font-medium">
+                        <span className="mr-3">📍</span>{carRental?.name}
+                        </h2>
+                        <div className="text-[20px] mt-1">
+                            <p><span className="mr-3">🚗</span>{rentItem.car}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div className="text-[20px]">
+                            <span className="mr-3">🗓️</span>{formatDate(rentItem.startDate)} - {formatDate(rentItem.endDate)}
+                        </div>
+                    </div>
+                </div>
+                
+            }
             <div className="ml-auto pr-2 text-[52px] font-light">
                 ›
             </div>
