@@ -2,15 +2,20 @@
 import { Button } from '@mui/material'
 import Link from 'next/link'
 
-export default function StyledButton({color, title, pageRef, onClick} : {color:'purple'|'red', title:string, pageRef:string, onClick?:Function}) {
+export default function StyledButton({color, title, pageRef, type, onClick} : {
+  color:'purple'|'red',
+  title:string,
+  pageRef?:string,
+  type?: 'button' | 'submit' | 'reset',
+  onClick?:Function}) {
+
     const colorClass =
     color === 'purple'
       ? "bg-[var(--color-second-purple)] hover:bg-[var(--color-primary-purple)]"
       : "bg-[var(--color-primary-red)] hover:bg-[var(--color-second-red)]"
 
-    return (
-    <Link href={pageRef}>
-      <Button
+    const button = ( <Button
+        type={type ?? 'button'}
         onClick={() => onClick?.()}
         sx={{
             borderRadius: '999px',
@@ -34,6 +39,7 @@ export default function StyledButton({color, title, pageRef, onClick} : {color:'
       >
         {title}
       </Button>
-    </Link>
-  )
+    )
+
+    return pageRef ? <Link href={pageRef}>{button}</Link> : button
 }

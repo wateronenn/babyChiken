@@ -36,6 +36,7 @@ export default function SearchForm({
 
           <StyledButton
             title="Search"
+            color="purple"
             type="submit"
           />
 
@@ -43,7 +44,7 @@ export default function SearchForm({
             <StyledButton
               title="Clear"
               color="red"
-              href={action}
+              pageRef={action}
             />
           )}
         </div>
