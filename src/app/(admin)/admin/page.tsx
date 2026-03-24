@@ -1,9 +1,5 @@
 import Link from "next/link"
-import { useSession } from "next-auth/react"
-
 export default function Page() {
-  const { data: session, status } = useSession();
-
   return (
     <main className="min-h-screen bg-[#f4f4f4] pt-16">
 
