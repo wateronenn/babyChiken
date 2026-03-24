@@ -115,13 +115,13 @@ export default async function Page({
                 <StyledButton
                   title="Back"
                   color="red"
-                  pageRef="/car-rentals"
+                  href="/car-rentals"
                 />
 
                 <StyledButton
                   title="Book Now"
                   color="purple"
-                  pageRef={`/bookings/${id}/create`}
+                  href={`/bookings/${id}/create`}
                 />
               </div>
             </div>

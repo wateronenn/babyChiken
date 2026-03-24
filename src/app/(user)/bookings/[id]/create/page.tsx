@@ -14,7 +14,7 @@ export default async function CreateBookingPage({params}: {params: Promise<{id: 
     return (
         <main className="mx-auto max-w-5xl px-4 sm:px-6 py-10">
 
-            <h1 className="text-center text-3xl sm:text-4xl font-bold text-[var(--color-second-purple)] my-10">
+            <h1 className="text-center text-3xl sm:text-4xl font-bold text-[var(--color-second-purple)] mb-10">
                 Create Your Booking
             </h1>
 
