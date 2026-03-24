@@ -49,9 +49,8 @@ export default async function Page({
               <div className="mt-5 rounded-[24px] bg-white/40 p-4 text-black">
                 <h2 className="text-lg font-semibold">Rental Summary</h2>
                 <div className="mt-3 space-y-2 text-sm">
-                  <p>👤 คนเคยเช่า: {data.rents?.length ?? 0}</p>
-                  <p>🚗 จำนวนรถ: {data.car?.length ?? 0}</p>
-                  <p>🌍 ภูมิภาค: {data.region || "-"}</p>
+                  <p>👤 Customers: {data.rents?.length ?? 0}</p>
+                  <p>🚗 Total Cars: {data.car?.length ?? 0}</p>
                 </div>
               </div>
             </div>
@@ -84,8 +83,8 @@ export default async function Page({
                 </div>
 
                 <div className="rounded-[22px] bg-white/35 p-4">
-                  <p className="text-sm font-medium text-black/60">Total Rentals</p>
-                  <p className="mt-1 text-black">{data.rents?.length ?? 0} คนเคยเช่า</p>
+                  <p className="text-sm font-medium text-black/60">Rental Count</p>
+                  <p className="mt-1 text-black">{data.rents?.length ?? 0} rentals</p>
                 </div>
               </div>
 
