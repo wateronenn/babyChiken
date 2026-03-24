@@ -1,6 +1,7 @@
 import { getCarRentals } from "@/libs/function/carRental"
 import CarRentalCard from "@/components/CarRentalCard"
 import { CarRentalResponse } from "../../../../interface"
+import SearchForm from "@/components/SearchForm"
 
 type PageProps = {
   searchParams?: Promise<{
@@ -63,35 +64,9 @@ export default async function Page({ searchParams }: PageProps) {
           </h1>
         </div>
 
-        <form action="/car-rentals" method="GET" className="mt-10 px-16">
-          <div className="flex items-center gap-4">
-            <input
-              type="text"
-              name="search"
-              defaultValue={search}
-              placeholder="search"
-              className="w-[90%] rounded-full bg-[var(--color-primary-purple)] px-5 py-2 text-black outline-none"
-            />
+        <SearchForm color="purple" defaultValue={search} action="/car-rentals"/>
 
-            <button
-              type="submit"
-              className="rounded-full bg-[var(--color-second-purple)] px-5 py-2 text-white"
-            >
-              Search
-            </button>
-
-            {search && (
-              <a
-                href="/car-rentals"
-                className="rounded-full border border-gray-300 px-5 py-2 text-gray-700"
-              >
-                Clear
-              </a>
-            )}
-          </div>
-        </form>
-
-        <div className="px-14 pt-6 text-sm text-gray-500">
+        <div className="mb-6 text-sm text-gray-500">
           {search ? (
             <p>
               Result for: <span className="font-medium text-black">{search}</span>

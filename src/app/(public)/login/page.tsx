@@ -1,5 +1,5 @@
 'use client';
-import { signIn } from 'next-auth/react';
+import { getSession, signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
@@ -15,8 +15,13 @@ export default function LoginPage() {
     });
 
     if (res?.ok) {
+      const session = await getSession();
       alert('Login successful');
-      router.push('/car-rentals');
+      if (session?.user.role === 'admin') {
+        router.push('/admin');
+      } else {
+        router.push('/car-rentals');
+      }
     }
     else alert('Invalid credentials');
   };

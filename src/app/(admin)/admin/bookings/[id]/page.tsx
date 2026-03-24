@@ -2,18 +2,18 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import { getOneRent } from "@/libs/function/Rent";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
-import { CarRentalResponse } from "../../../../interface";
-import { formatDate } from "../../../../utils";
-import CancelButton from "@/components/booking/CancelButton";
+import { CarRentalResponse } from "../../../../../../interface"; 
+import { formatDate } from "../../../../../../utils"; 
+import CancelButton from "@/components/booking/DeleteButton";
 import Link from "next/link";
 
-export default async function BookingDetailPage({params} : {params:Promise<{bid:string}>}) {
+export default async function BookingDetailPage({params} : {params:Promise<{id:string}>}) {
 
     const session = await getServerSession(authOptions)
         if (!session || !session.user.token) return null
     
-    const {bid} = await params;
-    const bookingDetail = await getOneRent(bid, session.user.token)
+    const {id} = await params;
+    const bookingDetail = await getOneRent(id, session.user.token)
 
     const carRental = typeof bookingDetail.carRental === 'object' 
     ? bookingDetail.carRental as CarRentalResponse 
@@ -48,8 +48,8 @@ export default async function BookingDetailPage({params} : {params:Promise<{bid:
                 </div>
             </div>
             <div className="flex justify-center gap-10">
-                <CancelButton bid={bid} token={session.user.token}/>
-                <Link href={`/booking/${bid}/edit`}>
+                <CancelButton bid={id} token={session.user.token}/>
+                <Link href={`/bookings/${id}/edit`}>
                     <button className="rounded-md bg-[var(--color-primary-purple)] hover:bg-[var(--color-second-purple)] 
                     px-3 py-2 text-white shadow-sm">
                         Edit

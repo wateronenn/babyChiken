@@ -1,22 +1,20 @@
 "use client"
 
-import Image from "next/image"
-import { DatePicker } from "@mui/x-date-pickers"
-import { LocalizationProvider } from "@mui/x-date-pickers"
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
-import { useState } from "react"
-import dayjs, { Dayjs } from "dayjs"
-import { updateRent } from "@/libs/function/Rent"
-import { useRouter } from "next/navigation"
-import { MenuItem, Select } from "@mui/material"
-import { CarRentalResponse, RentResponse } from "../../../interface"
-import { getCarRentalById } from "@/libs/function/carRental"
+import { MenuItem, Select } from "@mui/material";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { CarRentalResponse } from "../../../interface";
+import { useState } from "react";
+import dayjs, { Dayjs } from "dayjs";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { createRent } from "@/libs/function/Rent";
 
-export default function EditBookingForm({bid, token, rentItem, carRentalItem}: {bid: string, token: string, rentItem:RentResponse, carRentalItem:string | CarRentalResponse}) {
+export default function CreateBookingForm({token, carRentalItem}:{token:string, carRentalItem:CarRentalResponse}) {
 
-    const [startDate, setStartDate] = useState<Dayjs | null>(dayjs(rentItem.startDate))
-    const [endDate, setEndDate] = useState<Dayjs | null>(dayjs(rentItem.endDate))
-    const [car, setCar] = useState<string>(rentItem.car)
+    const [startDate, setStartDate] = useState<Dayjs | null>(null)
+    const [endDate, setEndDate] = useState<Dayjs | null>(dayjs(null))
+    const [car, setCar] = useState<string>("")
     const router = useRouter()
 
     const handleStartDateChange = (value: Dayjs | null) => {
@@ -30,21 +28,33 @@ export default function EditBookingForm({bid, token, rentItem, carRentalItem}: {
     }
 
     const handleSubmit = async () => {
-        if (!startDate || !endDate) return
-        await updateRent(bid, {
-            startDate: startDate.toISOString(),
-            endDate: endDate.toISOString(),
-            car: car
-        }, token)
-        router.push('/bookings')
+        if (!startDate || !endDate || !car) return
+        try {
+            const rent = await createRent(
+                {
+                    startDate: startDate.toISOString(),
+                    endDate: endDate.toISOString(),
+                    carRental: carRentalItem._id,
+                    car: car
+                },
+                token)
+            router.push(`/bookings/${rent._id}/create/success`)
+        } catch (error: any) {
+            console.log("error message:", error.message)
+            if (error.message.includes('already has 3 rents')) {
+                alert("You have reached the maximum of 3 bookings")
+            } else {
+                alert("Error")
+            }
+        }
     }
 
     return (
         <main className="text-center p-10">
             <h1 className="text-[var(--color-second-purple)] text-3xl font-bold">
-                Edit Your Bookings
+                Create Your Bookings
             </h1>
-            <div className="flex flex-row justify-center my-10 p-5 gap-10 rounded-lg bg-[var(--color-pastel-blue)]">
+            <div className="flex flex-row justify-center my-10 p-5 gap-10 rounded-lg bg-[var(--color-pastel-purple)]">
                 {
                     typeof carRentalItem === 'string' ?
                     null
@@ -96,13 +106,13 @@ export default function EditBookingForm({bid, token, rentItem, carRentalItem}: {
                 </div>
             </div>
             <div className="flex flex-row justify-center gap-10">
+                <button className="rounded-md bg-[var(--color-primary-red)] hover:bg-[var(--color-second-red)] px-3 py-2 text-white shadow-sm"
+                onClick={() => router.push(`/car-rentals/${carRentalItem._id}`)}>
+                    Cancel
+                </button>
                 <button className="rounded-md bg-[var(--color-primary-purple)] hover:bg-[var(--color-second-purple)] px-3 py-2 text-white shadow-sm"
                 onClick={handleSubmit}>
                     Confirm
-                </button>
-                <button className="rounded-md bg-[var(--color-primary-red)] hover:bg-[var(--color-second-red)] px-3 py-2 text-white shadow-sm"
-                onClick={() => router.push(`/bookings/${bid}`)}>
-                    Cancel
                 </button>
             </div>
         </main>

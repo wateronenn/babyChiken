@@ -1,6 +1,7 @@
 import Link from "next/link"
 import CarRentalCard from "@/components/CarRentalCard"
 import { getCarRentals } from "@/libs/function/carRental"
+import SearchForm from "@/components/SearchForm"
 export const dynamic = "force-dynamic"
 type PageProps = {
   searchParams?: Promise<{
@@ -55,35 +56,9 @@ export default async function Page({ searchParams }: PageProps) {
           </Link>
         </div>
 
-        <form action="/admin/car-rentals" method="GET" className="mb-10">
-          <div className="flex items-center justify-between gap-4">
-            <input
-              type="text"
-              name="search"
-              defaultValue={search}
-              placeholder="search"
-              className="w-full max-w-[90%] rounded-full bg-[#e9e7f7] px-6 py-4 text-lg outline-none placeholder:text-gray-500"
-            />
+        <SearchForm color="purple" defaultValue={search} action="/admin/car-rentals/"/>
 
-            <button
-              type="submit"
-              className="rounded-full bg-[#b7b0ff] px-6 py-4 text-lg text-white shadow-md transition hover:scale-[1.02]"
-            >
-              Search
-            </button>
-
-            {search && (
-              <Link
-                href="/admin/car-rentals"
-                className="rounded-full border border-gray-300 px-6 py-4 text-lg text-black"
-              >
-                Clear
-              </Link>
-            )}
-          </div>
-        </form>
-
-        <div className="mb-6 text-sm text-gray-600">
+        <div className="mb-6 text-sm text-gray-500">
           {search ? (
             <p>
               Result for: <span className="font-medium text-black">{search}</span>
