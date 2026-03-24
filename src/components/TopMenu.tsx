@@ -13,17 +13,20 @@ export default function TopMenu() {
     <div className="text-white fixed top-0 left-0 bg-[var(--color-primary-purple)] w-full h-[50px] z-30 flex flex-row justify-between items-center px-6">
 
       <div>
-        <TopMenuItem
-          title="Rental Car Center"
-          pageRef={role === "admin" ? "/admin" : "/car-rentals"}
-        />
+        {status !== "loading" && session && (
+          role === "admin" ? (
+            <TopMenuItem title="Dashboard" pageRef="/admin" />
+          ) : (
+            <TopMenuItem title="Rental Car Center" pageRef="/car-rentals" />
+          )
+        )}
       </div>
 
       <div className="flex flex-row gap-6 items-center">
 
         {status !== "loading" && session && (
           role === "admin" ? (
-            <TopMenuItem title="Dashboard" pageRef="/admin" />
+            null
           ) : (
             <TopMenuItem title="Bookings" pageRef="/bookings" />
           )
