@@ -115,11 +115,12 @@ export default async function BookingDetailPage({params} : {params:Promise<{id:s
           {/* ACTION BUTTONS */}
           <div className="mt-8 flex items-center justify-between">
             
-            <StyledButton color="purple" title="Back" pageRef="/bookings"/>
+            <StyledButton color="purple" title="Back" pageRef="/admin/bookings"/>
 
             <div className="flex items-center gap-4">
               
-                <StyledButton color="purple" title="Edit" pageRef={`/bookings/${bookingDetail._id}/edit`}/>
+                <StyledButton color="purple" title="Edit"
+                pageRef={`/admin/bookings/${bookingDetail._id}/edit`}/>
                 <DeleteButton bid={bookingDetail._id} token={session.user.token}/>
               
             </div>
