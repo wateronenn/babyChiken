@@ -9,8 +9,8 @@ export default async function BookingCardCatalog({rentJson, isAdmin}:{rentJson:P
 
     if (!rentJsonReady.data || rentJsonReady.data.length === 0) {
         return (
-            <div className="px-14 py-8">
-                <p>No Booking</p>
+            <div className="flex-1 w-full flex justify-center">
+                <p className="text-lg text-gray-500">No Booking</p>
             </div>
         )
     }
