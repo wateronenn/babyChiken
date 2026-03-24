@@ -15,7 +15,7 @@ import { convertGoogleDriveUrl } from "@/libs/function/convertGoogleDriveUrl";
 export default function CreateBookingForm({token, carRentalItem}:{token:string, carRentalItem:CarRentalResponse}) {
 
     const [startDate, setStartDate] = useState<Dayjs | null>(null)
-    const [endDate, setEndDate] = useState<Dayjs | null>(dayjs(null))
+    const [endDate, setEndDate] = useState<Dayjs | null>(null)
     const [car, setCar] = useState<string>("")
     const router = useRouter()
 
