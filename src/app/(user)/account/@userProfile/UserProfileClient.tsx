@@ -2,10 +2,18 @@
 
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 export default function UserProfileClient({ profile, token }: any) {
   const router = useRouter();
   const createdAt = new Date(profile.data.createdAt);
+
+  const { data: session, status } = useSession();
+  if (!session) {
+      alert("you are not authorized to this path")
+      router.push("/car-rentals");
+      return null;
+    }
 
   return (
      <main className="bg-[var(--color-pastel-yellow)] min-h-screen w-full pt-[20px]">

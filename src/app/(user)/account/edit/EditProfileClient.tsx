@@ -2,10 +2,18 @@
 import { useState } from "react";
 import { updateUser } from "@/libs/function/user";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 
 export default function EditProfileClient({ user, token }: any) {
   const router = useRouter();
+  const { data: session, status } = useSession();
+    if (!session) {
+      alert("you are not authorized to this path")
+      router.push("/car-rentals");
+      return null;
+    }
+  
 
   const [form, setForm] = useState({
     username : user.username,
