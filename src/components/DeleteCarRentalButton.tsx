@@ -1,9 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
 import { deleteCarRental } from "@/libs/function/carRental"
+import StyledButton from "@/components/StyledButton"
 
 type DeleteCarRentalButtonProps = {
   id: string
@@ -15,12 +16,13 @@ export default function DeleteCarRentalButton({
   name,
 }: DeleteCarRentalButtonProps) {
   const router = useRouter()
+  const pathname = usePathname()
   const { data: session } = useSession()
   const [isDeleting, setIsDeleting] = useState(false)
 
   const handleDelete = async () => {
     const confirmed = window.confirm(
-      `ต้องการลบ ${name || "car rental"} ใช่ไหม?`
+      `Are you sure you want to delete ${name || "this car rental"}?`
     )
 
     if (!confirmed) return
@@ -47,12 +49,10 @@ export default function DeleteCarRentalButton({
   }
 
   return (
-    <button
+    <StyledButton
+      title="Delete"
+      color="red"
       onClick={handleDelete}
-      disabled={isDeleting}
-      className="rounded-full bg-[#f4b8b8] px-7 py-3 font-medium text-white shadow-sm transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-70"
-    >
-      {isDeleting ? "Deleting..." : "Delete"}
-    </button>
+    />
   )
 }

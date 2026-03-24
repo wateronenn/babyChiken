@@ -17,7 +17,7 @@ export default async function Booking() {
             <h1 className="text-[var(--color-second-purple)] text-3xl font-bold">
                 Your Bookings
             </h1>
-            <BookingCardCatalog rentJson={rents}/>
+            <BookingCardCatalog rentJson={rents} isAdmin={session.user.role === 'admin'}/>
         </main>
     )
 }

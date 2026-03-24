@@ -50,10 +50,7 @@ export async function updateRent(
     },
     body: JSON.stringify(data),
   });
-   if (!res.ok) {
-      console.error("Logout failed:", res.status, await res.text());
-      throw new Error('Failed to logout');
-    }
+  if (!res.ok) throw new Error('Failed to update rent');
   return res.json();
 }
 

@@ -22,8 +22,8 @@ export interface CarRentalResponse {
   region: string;
   car?: string[];
   picture?: string;
-  pricePerDay?: Number
-  rentedUser?: Number
+  pricePerDay?: number
+  rentedUser?: number
   rents?: RentResponse[];
 }
 
@@ -31,7 +31,7 @@ export interface CarRentalResponse {
 export interface RentJson {
   success: boolean,
   count: number,
-  pagination: Object,
+  pagination?: Object,
   data: RentResponse[]
 }
 
@@ -46,7 +46,7 @@ export interface RentResponse {
   _id: string;
   startDate: string;
   endDate: string;
-  user: string | UserResponse;       // string if not populated, UserResponse if populated
+  user: string | UserResponse | null;       // string if not populated, UserResponse if populated
   carRental: string | CarRentalResponse; // string if not populated, CarRentalResponse if populated
   car: string;
   createAt: string;

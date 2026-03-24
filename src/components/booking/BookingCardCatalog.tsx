@@ -3,7 +3,7 @@ import { RentJson, RentResponse } from "../../../interface";
 import BookingCard from "./BookingCard";
 
 
-export default async function BookingCardCatalog({rentJson}:{rentJson:Promise<RentJson>}) {
+export default async function BookingCardCatalog({rentJson, isAdmin}:{rentJson:Promise<RentJson>, isAdmin:boolean}) {
 
     const rentJsonReady = await rentJson
 
@@ -19,8 +19,9 @@ export default async function BookingCardCatalog({rentJson}:{rentJson:Promise<Re
         <div className="mx-auto max-w-5xl px-4 sm:px-6 py-8 flex flex-col gap-5 w-full">
             {
                 rentJsonReady.data.map((rentItem:RentResponse)=>(
-                    <Link href={`/bookings/${rentItem._id}`} key={rentItem._id}>
-                        <BookingCard rentItem={rentItem}/>
+                    <Link href={isAdmin ? `/admin/bookings/${rentItem._id}` : `/bookings/${rentItem._id}`}
+                    key={rentItem._id}>
+                        <BookingCard rentItem={rentItem} isAdmin={isAdmin}/>
                     </Link>
                 ))
             }
