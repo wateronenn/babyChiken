@@ -66,7 +66,7 @@ export default function BookingCard({rentItem, isAdmin}:{rentItem:RentResponse, 
                 </div>
                 
             }
-            <div className="ml-auto pr-2 text-[52px] font-light">
+            <div className="ml-auto pr-2 flex items-center text-[52px] font-light">
                 ›
             </div>
         </InteractiveBookingCard>

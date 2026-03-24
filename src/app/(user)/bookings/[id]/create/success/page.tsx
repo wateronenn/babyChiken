@@ -24,41 +24,42 @@ export default async function SuccessBookingPage({params}: {params: Promise<{id:
             <h1 className="text-[var(--color-second-purple)] text-3xl font-bold">
                 Successfully Booking 🎉
             </h1>
-            <div className="w-[1000] h-fit p-5 shadow-lg rounded-lg bg-[var(--color-primary-blue)]
+            <div className="w-[1000] h-fit p-5 shadow-lg rounded-[28px] bg-[var(--color-primary-blue)]
             text-black flex flex-row gap-10">
-                <div className='flex h-[120px] w-[120px] shrink-0 items-center justify-center overflow-hidden rounded-lg bg-[var(--color-pastel-yellow)]'>
+                <div className="flex h-[150px] w-[150px] shrink-0 items-center justify-center overflow-hidden rounded-[24px] bg-[var(--color-pastel-yellow)]">
                     {
                         carRental?.picture ?
-                        <div>
-                            <Image
-                            src={carRental.picture}
-                            alt='place picture'
-                            width={0}
-                            height={0}
-                            sizes="30"
-                            className='object-cover w-full h-auto'
-                            />
-                        </div>
+                        <Image
+                        src={carRental.picture}
+                        alt='place picture'
+                        width={0}
+                        height={0}
+                        sizes="30"
+                        className='object-cover w-full h-auto'
+                        />
                         : null
                     }
                 </div>
-                <div>
-                    <h2 className='text-[1.5em]'>
-                        {rent._id}
-                    </h2>
-                    <h3 className='text-[1.25em]'>
-                        {carRental?.name}
-                    </h3>
-                    <h3 className='text-[1.25em]'>
-                        {rent.car}
-                    </h3>
-                    <h3 className='text-[1.25em]'>
-                        {formatDate(rent.startDate)} - {formatDate(rent.endDate)}
-                    </h3>
+                <div className="flex flex-col justify-between h-full py-1 min-h-[150px]">
+                    <div>
+                        <h2 className="text-2xl font-medium">
+                        <span className="mr-3">📍</span>{carRental?.name}
+                        </h2>
+                        <div className="text-[20px] mt-1">
+                            <p><span className="mr-3">🚗</span>{rent.car}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div className="text-[20px]">
+                            <span className="mr-3">🗓️</span>{formatDate(rent.startDate)} - {formatDate(rent.endDate)}
+                        </div>
+                    </div>
                 </div>
             </div>
-            <StyledButton color="purple" title="Back To Menu" pageRef="/car-rentals"/>
-            <StyledButton color="purple" title="View Bookings" pageRef="/bookings"/>
+            <div className="sm:col-span-2 flex gap-20 mt-4">
+                <StyledButton color="purple" title="Back To Menu" pageRef="/car-rentals"/>
+                <StyledButton color="purple" title="View Bookings" pageRef="/bookings"/>
+            </div>
         </main>
     )
 }
