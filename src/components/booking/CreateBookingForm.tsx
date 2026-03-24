@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { createRent } from "@/libs/function/Rent";
 import StyledButton from "../StyledButton";
+import { convertGoogleDriveUrl } from "@/libs/function/convertGoogleDriveUrl";
 
 export default function CreateBookingForm({token, carRentalItem}:{token:string, carRentalItem:CarRentalResponse}) {
 
@@ -59,7 +60,7 @@ export default function CreateBookingForm({token, carRentalItem}:{token:string, 
             <div className="w-full md:w-[260px] shrink-0">
                 <div className="flex h-[220px] items-center justify-center rounded-[24px] bg-[var(--color-pastel-yellow)] p-4">
                 <Image
-                    src={carRentalItem.picture ?? ''}
+                    src={convertGoogleDriveUrl(carRentalItem.picture)}
                     alt="place"
                     width={0}
                     height={0}

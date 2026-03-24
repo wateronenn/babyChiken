@@ -2,6 +2,7 @@ import Image from "next/image";
 import InteractiveBookingCard from "./InteractiveBookingCard";
 import { CarRentalResponse, RentResponse } from "../../../interface";
 import { formatDate, getCarRentalName } from "../../../utils";
+import { convertGoogleDriveUrl } from "@/libs/function/convertGoogleDriveUrl";
 
 export default function BookingCard({rentItem, isAdmin}:{rentItem:RentResponse, isAdmin:boolean}) {
 
@@ -21,7 +22,7 @@ export default function BookingCard({rentItem, isAdmin}:{rentItem:RentResponse, 
                 {
                     carRental?.picture ?
                     <Image
-                    src={carRental.picture}
+                    src={convertGoogleDriveUrl(carRental.picture)}
                     alt='place picture'
                     width={0}
                     height={0}
