@@ -1,14 +1,8 @@
 import Link from "next/link"
 import { useSession } from "next-auth/react"
-import { useRouter } from "next/router";
+
 export default function Page() {
   const { data: session, status } = useSession();
-  const router = useRouter();
-  if (!session) {
-      alert("you are not authorized to this path")
-      router.push("/car-rentals");
-      return null;
-    }
 
   return (
     <main className="min-h-screen bg-[#f4f4f4] pt-16">
