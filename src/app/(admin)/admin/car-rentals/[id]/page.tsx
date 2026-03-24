@@ -1,4 +1,4 @@
-import StyledButton from "@/components/StyledButton"
+import StyledButton from "@/components/StyledButtonCarRental"
 import { getCarRentalById } from "@/libs/function/carRental"
 import { convertGoogleDriveUrl } from "@/libs/function/convertGoogleDriveUrl"
 import DeleteCarRentalButton from "@/components/DeleteCarRentalButton"
