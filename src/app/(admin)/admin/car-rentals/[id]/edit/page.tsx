@@ -41,6 +41,8 @@ export default function EditCarRentalPage() {
           region: item.region || "",
           car: item.car && item.car.length > 0 ? item.car : [""],
           picture: item.picture || "",
+          pricePerDay: item.pricePerDay ?? 0,
+          rentedUser: item.rentedUser ?? 0,
         })
       } catch (error) {
         console.error(error)

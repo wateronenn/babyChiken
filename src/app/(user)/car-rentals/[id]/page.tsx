@@ -1,6 +1,6 @@
-import Link from "next/link"
 import { convertGoogleDriveUrl } from "@/libs/function/convertGoogleDriveUrl"
 import StyledButton from "@/components/StyledButtonCarRental"
+import { CarRentalResponse } from "../../../../../interface"
 
 export default async function Page({
   params,
@@ -19,7 +19,7 @@ export default async function Page({
     cache: "no-store",
   })
 
-  const rentalJson = await res.json()
+  const rentalJson: { data?: CarRentalResponse } = await res.json()
   const data = rentalJson.data
 
   if (!res.ok || !data) {
@@ -33,6 +33,10 @@ export default async function Page({
     )
   }
 
+  const imageSrc = data.picture
+    ? convertGoogleDriveUrl(data.picture)
+    : "/img/logo.png"
+
   return (
     <main className="min-h-screen bg-[#f7f7fb] px-6 pt-24">
       <div className="mx-auto max-w-5xl">
@@ -41,7 +45,7 @@ export default async function Page({
             <div className="w-full shrink-0 md:w-[260px]">
               <div className="flex h-[240px] w-full items-center justify-center rounded-[28px] bg-white p-5">
                 <img
-                  src={convertGoogleDriveUrl(data.picture)}
+                  src={imageSrc}
                   alt={data.name}
                   className="h-full w-full object-cover"
                 />
@@ -50,7 +54,7 @@ export default async function Page({
               <div className="mt-5 rounded-[24px] bg-white/40 p-4 text-black">
                 <h2 className="text-lg font-semibold">Rental Summary</h2>
                 <div className="mt-3 space-y-2 text-sm">
-                  <p>👤 Customers: {data.rents?.length ?? 0}</p>
+                  <p>👤 Customers: {data.rentedUser ?? 0}</p>
                   <p>🚗 Total Cars: {data.car?.length ?? 0}</p>
                 </div>
               </div>
@@ -84,8 +88,8 @@ export default async function Page({
                 </div>
 
                 <div className="rounded-[22px] bg-white/35 p-4">
-                  <p className="text-sm font-medium text-black/60">Rental Count</p>
-                  <p className="mt-1 text-black">{data.rents?.length ?? 0} rentals</p>
+                  <p className="text-sm font-medium text-black/60">Price Per Day</p>
+                  <p className="mt-1 text-black">{data.pricePerDay ?? 0} THB</p>
                 </div>
               </div>
 
@@ -111,10 +115,9 @@ export default async function Page({
               </div>
 
               <div className="mt-8 flex items-center justify-between">
-
                 <StyledButton
                   title="Back"
-                  color="blue"
+                  color="red"
                   href="/car-rentals"
                 />
 

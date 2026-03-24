@@ -13,13 +13,11 @@ export default async function Page({ searchParams }: PageProps) {
   const resolvedSearchParams = await searchParams
   const search = resolvedSearchParams?.search?.trim() || ""
 
-  const carRentalsJson = (await getCarRentals(search)) as unknown as {
+  const carRentalsJson = (await getCarRentals(search)) as {
     data?: CarRentalResponse[]
   }
 
-  const carRentals = carRentalsJson?.data || []
-
-  const filteredCarRentals = carRentals
+  const carRentals = carRentalsJson?.data ?? []
 
   return (
     <main className="min-h-screen bg-white pt-16">
@@ -40,7 +38,7 @@ export default async function Page({ searchParams }: PageProps) {
 
           <div className="relative z-10 flex h-full items-center px-10">
             <div>
-              <h1 className="text-4xl font-bold text-white drop-shadow ">
+              <h1 className="text-4xl font-bold text-white drop-shadow">
                 Find Your Ride
               </h1>
               <p className="mt-2 text-white/90">Easy booking ✨</p>
@@ -48,15 +46,19 @@ export default async function Page({ searchParams }: PageProps) {
           </div>
         </div>
 
-        <div className="mt-6 pt-6 pb-10 flex flex-col items-center">
+        <div className="mt-6 flex flex-col items-center pt-6 pb-10">
           <h1 className="text-5xl font-semibold text-[var(--color-second-purple)]">
             Car Rental
           </h1>
         </div>
 
-        <SearchForm color="purple" defaultValue={search} action="/car-rentals" />
+        <SearchForm
+          color="purple"
+          defaultValue={search}
+          action="/car-rentals"
+        />
 
-        <div className="mb-6 text-sm text-gray-500">
+        <div className="mb-6 px-14 text-sm text-gray-500">
           {search ? (
             <p>
               Result for: <span className="font-medium text-black">{search}</span>
@@ -67,8 +69,8 @@ export default async function Page({ searchParams }: PageProps) {
         </div>
 
         <div className="space-y-5 px-14 py-8">
-          {filteredCarRentals.length > 0 ? (
-            filteredCarRentals.map((item) => (
+          {carRentals.length > 0 ? (
+            carRentals.map((item) => (
               <CarRentalCard
                 key={item._id}
                 href={`/car-rentals/${item._id}`}
