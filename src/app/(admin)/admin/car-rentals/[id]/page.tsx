@@ -28,7 +28,7 @@ export default async function Page({
         <div className="rounded-[32px] bg-[var(--color-primary-purple)] p-8 shadow-[0_16px_40px_rgba(0,0,0,0.12)]">
           <div className="flex flex-col gap-8 md:flex-row">
             <div className="w-full shrink-0 md:w-[260px]">
-              <div className="flex h-[240px] w-full items-center justify-center rounded-[28px] bg-[var(--color-pastel-yellow)] p-5">
+              <div className="flex h-[240px] w-full items-center justify-center rounded-[28px] bg-white] p-5">
                 <img
                   src={convertGoogleDriveUrl(item.picture)}
                   alt={item.name || "car rental"}
@@ -39,9 +39,8 @@ export default async function Page({
               <div className="mt-5 rounded-[24px] bg-white/40 p-4 text-black">
                 <h2 className="text-lg font-semibold">Rental Summary</h2>
                 <div className="mt-3 space-y-2 text-sm">
-                  <p>👤 คนเคยเช่า: {item.rents?.length ?? 0}</p>
-                  <p>🚗 จำนวนรถ: {item.car?.length ?? 0}</p>
-                  <p>🌍 ภูมิภาค: {item.region || "-"}</p>
+                  <p>👤 Customers: {item.rents?.length ?? 0}</p>
+                  <p>🚗 Total Cars: {item.car?.length ?? 0}</p>
                 </div>
               </div>
             </div>
@@ -75,8 +74,8 @@ export default async function Page({
                 </div>
 
                 <div className="rounded-[22px] bg-white/35 p-4">
-                  <p className="text-sm font-medium text-black/60">Total Rentals</p>
-                  <p className="mt-1 text-black">{item.rents?.length ?? 0} คนเคยเช่า</p>
+                  <p className="text-sm font-medium text-black/60">Rental Count</p>
+                  <p className="mt-1 text-black">{item.rents?.length ?? 0} rents</p>
                 </div>
               </div>
 
