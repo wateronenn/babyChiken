@@ -6,6 +6,7 @@ import Image from "next/image";
 import { formatDate } from "../../../../../../../utils";
 import { CarRentalResponse } from "../../../../../../../interface";
 import StyledButton from "@/components/StyledButton";
+import { convertGoogleDriveUrl } from "@/libs/function/convertGoogleDriveUrl";
 
 export default async function SuccessBookingPage({params}: {params: Promise<{id: string}>}) {
 
@@ -30,7 +31,7 @@ export default async function SuccessBookingPage({params}: {params: Promise<{id:
                     {
                         carRental?.picture ?
                         <Image
-                        src={carRental.picture}
+                        src={convertGoogleDriveUrl(carRental.picture)}
                         alt='place picture'
                         width={0}
                         height={0}

@@ -7,6 +7,7 @@ import { formatDate } from "../../../../../../utils";
 import Link from "next/link";
 import DeleteButton from "@/components/booking/DeleteButton";
 import StyledButton from "@/components/StyledButton";
+import { convertGoogleDriveUrl } from "@/libs/function/convertGoogleDriveUrl";
 
 export default async function BookingDetailPage({params} : {params:Promise<{id:string}>}) {
 
@@ -47,7 +48,7 @@ export default async function BookingDetailPage({params} : {params:Promise<{id:s
             {
               carRental.picture &&
               <Image
-                src={carRental.picture}
+                src={convertGoogleDriveUrl(carRental.picture)}
                 alt="Car Image"
                 width={0}
                 height={0}
