@@ -13,7 +13,7 @@ export default function UserProfileClient({ profile, token }: any) {
             <div className="h-full bg-[var(--color-primary-blue)] flex flex-row gap-4 w-[70%] mx-auto mt-10 p-6 rounded-2xl ">
               <div className="flex flex-col items-center gap-4">
                         <Image
-                          src={profile.data.picture}
+                          src={"/img/profile.jpg"}
                           alt="profile picture"
                           width={120}
                           height={120}
