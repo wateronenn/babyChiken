@@ -2,6 +2,7 @@ import StyledButton from "@/components/StyledButtonCarRental"
 import { getCarRentalById } from "@/libs/function/carRental"
 import { convertGoogleDriveUrl } from "@/libs/function/convertGoogleDriveUrl"
 import DeleteCarRentalButton from "@/components/DeleteCarRentalButton"
+import { CarRentalResponse } from "../../../../../../interface"
 
 export default async function Page({
   params,
@@ -9,7 +10,7 @@ export default async function Page({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const item = await getCarRentalById(id)
+  const item: CarRentalResponse | undefined = await getCarRentalById(id)
 
   if (!item) {
     return (
@@ -22,6 +23,10 @@ export default async function Page({
     )
   }
 
+  const imageSrc = item.picture
+    ? convertGoogleDriveUrl(item.picture)
+    : "/img/logo.png"
+
   return (
     <main className="min-h-screen bg-[#f7f7fb] px-6 pt-24">
       <div className="mx-auto max-w-5xl">
@@ -30,7 +35,7 @@ export default async function Page({
             <div className="w-full shrink-0 md:w-[260px]">
               <div className="flex h-[240px] w-full items-center justify-center rounded-[28px] bg-white p-5">
                 <img
-                  src={convertGoogleDriveUrl(item.picture)}
+                  src={imageSrc}
                   alt={item.name || "car rental"}
                   className="h-full w-full object-contain"
                 />
@@ -39,7 +44,7 @@ export default async function Page({
               <div className="mt-5 rounded-[24px] bg-white/40 p-4 text-black">
                 <h2 className="text-lg font-semibold">Rental Summary</h2>
                 <div className="mt-3 space-y-2 text-sm">
-                  <p>👤 Customers: {item.rents?.length ?? 0}</p>
+                  <p>👤 Customers: {item.rentedUser ?? 0}</p>
                   <p>🚗 Total Cars: {item.car?.length ?? 0}</p>
                 </div>
               </div>
@@ -74,8 +79,8 @@ export default async function Page({
                 </div>
 
                 <div className="rounded-[22px] bg-white/35 p-4">
-                  <p className="text-sm font-medium text-black/60">Rental Count</p>
-                  <p className="mt-1 text-black">{item.rents?.length ?? 0} rents</p>
+                  <p className="text-sm font-medium text-black/60">Price Per Day</p>
+                  <p className="mt-1 text-black">{item.pricePerDay ?? 0} THB</p>
                 </div>
               </div>
 

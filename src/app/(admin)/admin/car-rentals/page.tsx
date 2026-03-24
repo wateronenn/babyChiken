@@ -3,6 +3,7 @@ import CarRentalCard from "@/components/CarRentalCard"
 import { getCarRentals } from "@/libs/function/carRental"
 import SearchForm from "@/components/SearchForm"
 import { CarRentalResponse } from "../../../../../interface"
+
 export const dynamic = "force-dynamic"
 
 type PageProps = {
@@ -15,14 +16,12 @@ export default async function Page({ searchParams }: PageProps) {
   const resolvedSearchParams = await searchParams
   const search = resolvedSearchParams?.search?.trim() || ""
 
-  const carRentalsJson = (await getCarRentals(search)) as unknown as {
+  const carRentalsJson = (await getCarRentals(search)) as {
     data?: CarRentalResponse[]
   }
 
-  const carRentals = carRentalsJson?.data || []
+  const carRentals = carRentalsJson?.data ?? []
 
-  const filteredCarRentals = carRentals
-  
   return (
     <main className="min-h-screen bg-[#f4f4f4] pt-16">
       <section className="relative h-[260px] w-full overflow-hidden">
@@ -59,7 +58,11 @@ export default async function Page({ searchParams }: PageProps) {
           />
         </div>
 
-        <SearchForm color="purple" defaultValue={search} action="/admin/car-rentals/" />
+        <SearchForm
+          color="purple"
+          defaultValue={search}
+          action="/admin/car-rentals"
+        />
 
         <div className="mb-6 text-sm text-gray-500">
           {search ? (
@@ -72,28 +75,28 @@ export default async function Page({ searchParams }: PageProps) {
         </div>
 
         <div className="space-y-5">
-          {filteredCarRentals.length > 0 ? (
-            filteredCarRentals.map((item: any) => {
-              if (!item) return null
-
-              return (
-                <CarRentalCard
-                  key={item._id}
-                  href={`/admin/car-rentals/${item._id}`}
-                  item={{
-                    _id: item._id,
-                    name: item.name,
-                    address: item.address,
-                    district: item.district,
-                    province: item.province,
-                    tel: item.tel,
-                    car: item.car || [],
-                    picture: item.picture || "/img/logo.png",
-                    rents: item.rents || [],
-                  }}
-                />
-              )
-            })
+          {carRentals.length > 0 ? (
+            carRentals.map((item) => (
+              <CarRentalCard
+                key={item._id}
+                href={`/admin/car-rentals/${item._id}`}
+                item={{
+                  _id: item._id,
+                  name: item.name,
+                  address: item.address,
+                  district: item.district,
+                  province: item.province,
+                  postalcode: item.postalcode,
+                  tel: item.tel,
+                  region: item.region,
+                  car: item.car ?? [],
+                  picture: item.picture ?? "/img/logo.png",
+                  pricePerDay: item.pricePerDay,
+                  rentedUser: item.rentedUser,
+                  rents: item.rents ?? [],
+                }}
+              />
+            ))
           ) : (
             <div className="py-10 text-center text-gray-500">
               No car rentals found

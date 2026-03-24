@@ -30,6 +30,8 @@ export default function CarRentalForm({
     region: "",
     car: [""],
     picture: "",
+    pricePerDay: 0,
+    rentedUser: 0,
   })
 
   const [preview, setPreview] = useState("")
@@ -50,6 +52,8 @@ export default function CarRentalForm({
       region: defaultData.region ?? "",
       car: defaultData.car && defaultData.car.length > 0 ? defaultData.car : [""],
       picture: pictureUrl,
+      pricePerDay: defaultData.pricePerDay ?? 0,
+      rentedUser: defaultData.rentedUser ?? 0,
     })
 
     setPreview(convertGoogleDriveUrl(pictureUrl))
@@ -68,12 +72,21 @@ export default function CarRentalForm({
       }))
       setPreview(convertGoogleDriveUrl(value))
       setImageError(false)
-    } else {
+      return
+    }
+
+    if (name === "pricePerDay" || name === "rentedUser") {
       setFormData((prev) => ({
         ...prev,
-        [name]: value,
+        [name]: Number(value),
       }))
+      return
     }
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
   }
 
   const handleCarChange = (index: number, value: string) => {
@@ -121,6 +134,8 @@ export default function CarRentalForm({
       car: (formData.car ?? [])
         .map((item) => item.trim())
         .filter((item) => item !== ""),
+      pricePerDay: Number(formData.pricePerDay),
+      rentedUser: Number(formData.rentedUser),
     }
 
     await onSubmit?.(cleanedData)
@@ -245,6 +260,30 @@ export default function CarRentalForm({
               <option value="West">West</option>
               <option value="South">South</option>
             </select>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <input
+              type="number"
+              name="pricePerDay"
+              value={formData.pricePerDay}
+              onChange={handleChange}
+              placeholder="Price per day"
+              className="w-full border-b border-gray-400 bg-transparent px-1 py-2 outline-none"
+              required
+              min={0}
+            />
+
+            <input
+              type="number"
+              name="rentedUser"
+              value={formData.rentedUser}
+              onChange={handleChange}
+              placeholder="Rented user"
+              className="w-full border-b border-gray-400 bg-transparent px-1 py-2 outline-none"
+              required
+              min={0}
+            />
           </div>
 
           <div>

@@ -9,6 +9,8 @@ export interface CarRentalItem {
   region: string;
   car?: string[];
   picture?: string;
+  pricePerDay: number
+  rentedUser: number
 }
 
 export interface CarRentalResponse {
