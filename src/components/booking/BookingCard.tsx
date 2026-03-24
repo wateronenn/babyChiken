@@ -19,18 +19,14 @@ export default function BookingCard({rentItem, isAdmin}:{rentItem:RentResponse, 
     return (
         <InteractiveBookingCard>
             <div className="flex h-[150px] w-[150px] shrink-0 items-center justify-center overflow-hidden rounded-[24px] bg-[var(--color-pastel-yellow)]">
-                {
-                    carRental?.picture ?
                     <Image
-                    src={convertGoogleDriveUrl(carRental.picture)}
+                    src={convertGoogleDriveUrl(carRental?.picture)}
                     alt='place picture'
                     width={0}
                     height={0}
                     sizes="30"
                     className='object-cover w-full h-auto'
                     />
-                    : null
-                }
             </div>
             {
                 isAdmin ? 

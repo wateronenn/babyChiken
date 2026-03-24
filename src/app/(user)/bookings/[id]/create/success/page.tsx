@@ -6,6 +6,7 @@ import Image from "next/image";
 import { formatDate } from "../../../../../../../utils";
 import { CarRentalResponse } from "../../../../../../../interface";
 import StyledButton from "@/components/StyledButton";
+import { convertGoogleDriveUrl } from "@/libs/function/convertGoogleDriveUrl";
 
 export default async function SuccessBookingPage({params}: {params: Promise<{id: string}>}) {
 
@@ -27,18 +28,14 @@ export default async function SuccessBookingPage({params}: {params: Promise<{id:
             <div className="w-[1000] h-fit p-5 shadow-lg rounded-[28px] bg-[var(--color-primary-blue)]
             text-black flex flex-row gap-10">
                 <div className="flex h-[150px] w-[150px] shrink-0 items-center justify-center overflow-hidden rounded-[24px] bg-[var(--color-pastel-yellow)]">
-                    {
-                        carRental?.picture ?
-                        <Image
-                        src={carRental.picture}
+                    <Image
+                        src={convertGoogleDriveUrl(carRental?.picture)}
                         alt='place picture'
                         width={0}
                         height={0}
                         sizes="30"
                         className='object-cover w-full h-auto'
                         />
-                        : null
-                    }
                 </div>
                 <div className="flex flex-col justify-between h-full py-1 min-h-[150px]">
                     <div>
